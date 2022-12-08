@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "317711497795",
+    "project_id": "metaltraveller-d4eb0",
+    "storage_bucket": "metaltraveller-d4eb0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317711497795:android:444f55d8ea2ac32e68b2f6",
+        "android_client_info": {
+          "package_name": "com.example.metaltraveller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317711497795-r2rlcivpcqi779onajr3mn95hbdec0vg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpopMVMVIw6KaQX5e4DOhdZURTmXSGjWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317711497795-r2rlcivpcqi779onajr3mn95hbdec0vg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
