@@ -3,9 +3,12 @@ package com.example.metaltraveller
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,11 +20,14 @@ class MainActivity : AppCompatActivity() {
 
         val db = Firebase.firestore
 
-//        val item1 = Place("Rockbaren", 1, "Bar")
-//        val item2 = Place("Pustervik", 3, "Venue")
-//
-//        db.collection("Places").add(item1)
-//        db.collection("Places").add(item2)
+        // Rockbaren coordinates 57.70 11.97
+        // Pustervik coordinates 57-70 11.95
+
+        val item1 = Place("Rockbaren", 1, "Bar", LatLng(0.0, 0.0))
+        val item2 = Place("Pustervik", 3, "Venue")
+
+        db.collection("Places").add(item1)
+        db.collection("Places").add(item2)
 
         val docRef = db.collection("Places")
 
