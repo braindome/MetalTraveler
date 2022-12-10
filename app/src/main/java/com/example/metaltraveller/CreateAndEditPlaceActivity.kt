@@ -1,5 +1,6 @@
 package com.example.metaltraveller
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -22,17 +23,21 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val placePosition = intent.getIntExtra(PLACE_POSITION_KEY, POSITION_NOT_SET)
         val addButton = findViewById<Button>(R.id.addPlaceButton)
 
-        if (placePosition != POSITION_NOT_SET) {
-            displayPlace(placePosition)
-            addButton.setOnClickListener() {
-                //TODO
-            }
-        }
+//        if (placePosition != POSITION_NOT_SET) {
+//            displayPlace(placePosition)
+//            addButton.setOnClickListener() {
+//                //TODO
+//            }
+//        }
 
         nameEditText = findViewById(R.id.placeNameEdit)
         typeEditText = findViewById(R.id.placeTypeEdit)
         ratingEditText = findViewById(R.id.placeRatingEdit)
         coordinateEditText = findViewById(R.id.coordinatesEdit)
+
+        addButton.setOnClickListener() {
+            addNewPlace()
+        }
     }
 
     fun displayPlace(position: Int) {
@@ -58,9 +63,11 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val type = typeEditText.text.toString()
         val rating = ratingEditText.text.toString().toInt()
 //        val coordinates : LatLng = coordinateEditText.text.toString()
+        val intent = Intent(this, RecycleListActivity::class.java)
 
         val place = Place(name, rating, type)
         DataManager.places.add(place)
-        finish()
+        //finish()
+        startActivity(intent)
     }
 }
