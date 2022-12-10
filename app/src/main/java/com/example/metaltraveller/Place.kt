@@ -5,5 +5,10 @@ import com.google.android.gms.maps.model.LatLng
 
 // NOTE Each argument could be null so remember ? and null in the declaration.
 
-class Place(val name : String? = null, val rating : Int? = null, val type : String? = null, val position : LatLng? = null) {
+class Place(
+    var name : String? = null,
+    var rating : Int? = null,
+    var type : String? = null,
+    val position : LatLng? = null,
+    var favorite : Boolean? = false) {
 }
