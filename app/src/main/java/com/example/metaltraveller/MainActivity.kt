@@ -35,12 +35,12 @@ class MainActivity : AppCompatActivity() {
 
         // Rockbaren coordinates 57.70 11.97
         // Pustervik coordinates 57-70 11.95
-
-        val item1 = Place("Rockbaren", 1, "Bar")
-        val item2 = Place("Pustervik", 3, "Venue")
-
-        db.collection("Places").add(item1)
-        db.collection("Places").add(item2)
+//
+//        val item1 = Place("Rockbaren", 1, "Bar")
+//        val item2 = Place("Pustervik", 3, "Venue")
+//
+//        db.collection("Places").add(item1)
+//        db.collection("Places").add(item2)
 
         val docRef = db.collection("Places")
 
