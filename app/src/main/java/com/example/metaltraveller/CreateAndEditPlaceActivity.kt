@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.type.LatLng
 
 const val PLACE_POSITION_KEY = "PLACE_POSITION"
@@ -16,12 +18,15 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
     lateinit var typeEditText: EditText
     lateinit var ratingEditText: EditText
     lateinit var coordinateEditText: EditText
+    val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_and_edit_place)
         val placePosition = intent.getIntExtra(PLACE_POSITION_KEY, POSITION_NOT_SET)
         val addButton = findViewById<Button>(R.id.addPlaceButton)
+
+
 
 //        if (placePosition != POSITION_NOT_SET) {
 //            displayPlace(placePosition)
@@ -36,6 +41,7 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         coordinateEditText = findViewById(R.id.coordinatesEdit)
 
         addButton.setOnClickListener() {
+
             addNewPlace()
         }
     }
@@ -67,6 +73,8 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
 
         val place = Place(name, rating, type)
         DataManager.places.add(place)
+        db.collection("Places").add(place)
+
         //finish()
         startActivity(intent)
     }

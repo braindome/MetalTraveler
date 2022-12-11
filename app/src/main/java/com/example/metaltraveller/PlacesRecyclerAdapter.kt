@@ -9,10 +9,13 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import android.content.Context
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class PlacesRecyclerAdapter(val context : Context, val places: List<Place>) : RecyclerView.Adapter<PlacesRecyclerAdapter.ViewHolder>() {
 
     val layoutInflater = LayoutInflater.from(context)
+    val db = Firebase.firestore
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = layoutInflater.inflate(R.layout.recycled_item_layout, parent, false)
@@ -30,7 +33,10 @@ class PlacesRecyclerAdapter(val context : Context, val places: List<Place>) : Re
     override fun getItemCount(): Int = places.size
 
     fun removePlace(position : Int) {
+
+        val item = DataManager.places[position]
         DataManager.places.removeAt(position)
+
         notifyDataSetChanged()
     }
 
@@ -59,6 +65,7 @@ class PlacesRecyclerAdapter(val context : Context, val places: List<Place>) : Re
 
             deleteButton.setOnClickListener() {
                 removePlace(placePosition)
+
             }
         }
     }
