@@ -1,5 +1,6 @@
 package com.example.metaltraveller
 
+import android.util.Log
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -8,6 +9,7 @@ object DataManager {
 
     val places = mutableListOf<Place>()
     val favorites = mutableListOf<Place>()
+
 
 //    init {
 //        createMockData()
@@ -22,4 +24,6 @@ object DataManager {
 //        places.add(Place("Truckstop Alaska", 5, "Club", true))
 //        places.add(Place("Brutal Assault", 5, "Festival", true))
 //    }
+
+
 }

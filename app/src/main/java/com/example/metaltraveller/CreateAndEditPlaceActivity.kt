@@ -3,6 +3,7 @@ package com.example.metaltraveller
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import com.google.firebase.firestore.ktx.firestore
@@ -70,10 +71,22 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val rating = ratingEditText.text.toString().toInt()
 //        val coordinates : LatLng = coordinateEditText.text.toString()
         val intent = Intent(this, RecycleListActivity::class.java)
+        val intent2 = Intent(this, DataManager::class.java)
+
 
         val place = Place(name, rating, type)
         DataManager.places.add(place)
+
         db.collection("Places").add(place)
+            .addOnSuccessListener { documentReference ->
+                Log.d("docId", "DocumentSnapshot written with ID: ${documentReference.id}")
+                val placeId = documentReference.id
+                intent2.putExtra("placeId", placeId)
+            }
+            .addOnFailureListener { e ->
+                Log.d("docId", "Error adding document")
+            }
+
 
         //finish()
         startActivity(intent)

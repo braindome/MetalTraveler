@@ -3,10 +3,13 @@ package com.example.metaltraveller
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class RecycleListActivity : AppCompatActivity() {
 
@@ -27,4 +30,6 @@ class RecycleListActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+
 }
