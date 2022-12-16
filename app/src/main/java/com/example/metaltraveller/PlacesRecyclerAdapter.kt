@@ -11,13 +11,16 @@ import androidx.recyclerview.widget.RecyclerView
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 class PlacesRecyclerAdapter(val context : Context, val places: List<Place>) : RecyclerView.Adapter<PlacesRecyclerAdapter.ViewHolder>() {
 
     val layoutInflater = LayoutInflater.from(context)
     val db = Firebase.firestore
+    val docRefPlaces = db.collection("Places")
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,15 +35,23 @@ class PlacesRecyclerAdapter(val context : Context, val places: List<Place>) : Re
         holder.nameTextView.text = place.name
         holder.typeNameView.text = place.type
         holder.ratingTextView.text = place.rating.toString()
+        holder.placePosition = position
+        val holdPlacePosition = holder.deleteButton
+
+        holdPlacePosition.setOnClickListener {
+            removePlace(position)
+            Log.d("holdPlace", "$position")
+        }
     }
 
     override fun getItemCount(): Int = places.size
 
     fun removePlace(position : Int) {
 
-        DataManager.places.removeAt(position)
 
-        notifyDataSetChanged()
+        DataManager.places[position].documentId?.let { removeFromFirestore(it, position) }
+        //Log.d("Removed item id", DataManager.places[position].documentId!!)
+
     }
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
@@ -51,6 +62,7 @@ class PlacesRecyclerAdapter(val context : Context, val places: List<Place>) : Re
         var favoriteButton = itemView.findViewById<CheckBox>(R.id.checkBox)
         val deleteButton = itemView.findViewById<ImageButton>(R.id.deleteButton)
         var placePosition = 0
+
 
         init {
 
@@ -66,27 +78,47 @@ class PlacesRecyclerAdapter(val context : Context, val places: List<Place>) : Re
                 DataManager.favorites[placePosition].favorite = favoriteButton.isChecked
             }
 
-            deleteButton.setOnClickListener() {
+//            deleteButton.setOnClickListener() {
+//                removePlace(placePosition)
+//            }
+        }
+    }
 
-                removePlace(placePosition)
-
+    fun addToListFromDb() {
+        docRefPlaces.addSnapshotListener { snapshot, e ->
+            if (snapshot != null) {
+                DataManager.places.clear()
+                for (document in snapshot.documents) {
+                    val item = document.toObject<Place>()
+                    if (item != null) {
+                        DataManager.places.add(item)
+                    }
+                }
             }
         }
     }
-        //TODO find a place for this
-//    fun removeItemFromDatabase() {
-//
-//
-//
-//        if (placeId != null) {
-//            db.collection("Places").document(placeId).delete()
-//                .addOnSuccessListener { snapShot ->
-//                    Log.d("!!!!!", "Place successfully deleted from db")
-//                }
-//                .addOnFailureListener { e ->
-//                    Log.d("!!!!!", "Place not deleted from db")
-//                }
-//        }
-//    }
+
+    fun printPlaces() {
+        for (item in DataManager.places) {
+            Log.d("Place list!!!!", "${item.name}")
+        }
+    }
+
+    fun removeFromFirestore(documentId: String, position: Int) {
+
+        docRefPlaces.document(documentId).delete()
+            .addOnSuccessListener {
+                Log.d("itemRemoval", "DocumentSnapshot successfully deleted!")
+                DataManager.places.removeAt(position)
+                notifyDataSetChanged()
+            }
+            .addOnFailureListener {
+                Log.d("itemRemoval", "Item not deleted")
+            }
+
+
+    }
+
+
 
 }

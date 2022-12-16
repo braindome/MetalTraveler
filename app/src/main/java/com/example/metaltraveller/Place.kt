@@ -1,6 +1,7 @@
 package com.example.metaltraveller
 
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.firestore.DocumentId
 
 
 // NOTE Each argument could be null so remember ? and null in the declaration.
@@ -10,5 +11,7 @@ class Place(
     var rating : Int? = null,
     var type : String? = null,
     //val position : LatLng? = null,
-    var favorite : Boolean? = false) {
+    var favorite : Boolean = false,
+    @DocumentId
+    var documentId : String? = null) {
 }
