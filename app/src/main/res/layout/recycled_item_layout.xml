@@ -31,28 +31,28 @@
         android:id="@+id/placeRatingView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="20dp"
         android:text="Rating"
-        app:layout_constraintStart_toEndOf="@+id/placeTypeView"
+        app:layout_constraintStart_toEndOf="@+id/placeNameView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/placeLocationView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="20dp"
         android:text="Location"
-        app:layout_constraintStart_toEndOf="@+id/placeRatingView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/placeTypeView"
+        app:layout_constraintTop_toBottomOf="@+id/placeRatingView" />
 
     <CheckBox
         android:id="@+id/checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="11dp"
+        android:layout_width="89dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
         android:text="favorite"
         app:layout_constraintEnd_toStartOf="@+id/deleteButton"
         app:layout_constraintTop_toTopOf="parent" />
@@ -66,4 +66,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_delete" />
+
+    <TextView
+        android:id="@+id/detailsButton"
+        android:layout_width="65dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="40dp"
+        android:background="#A51A1A"
+        android:text="DETAILS"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/deleteButton"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

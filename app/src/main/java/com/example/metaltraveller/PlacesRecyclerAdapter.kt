@@ -11,12 +11,15 @@ import androidx.recyclerview.widget.RecyclerView
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import com.google.android.gms.common.data.DataHolder
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
-class PlacesRecyclerAdapter(val context : Context, val places: List<Place>) : RecyclerView.Adapter<PlacesRecyclerAdapter.ViewHolder>() {
+class PlacesRecyclerAdapter(context : Context,
+                            val places: List<Place>)
+                            : RecyclerView.Adapter<PlacesRecyclerAdapter.ViewHolder>() {
 
     val layoutInflater = LayoutInflater.from(context)
     val db = Firebase.firestore
@@ -66,12 +69,12 @@ class PlacesRecyclerAdapter(val context : Context, val places: List<Place>) : Re
 
         init {
 
-            itemView.setOnClickListener() {
-                val intent = Intent(context, CreateAndEditPlaceActivity::class.java)
-                intent.putExtra(PLACE_POSITION_KEY, placePosition)
-                context.startActivity(intent)
-
-            }
+//            itemView.setOnClickListener() {
+//                val intent = Intent(context, CreateAndEditPlaceActivity::class.java)
+//                intent.putExtra(PLACE_POSITION_KEY, placePosition)
+//                context.startActivity(intent)
+//
+//            }
 
 
             favoriteButton.setOnClickListener() {
@@ -82,6 +85,7 @@ class PlacesRecyclerAdapter(val context : Context, val places: List<Place>) : Re
 //                removePlace(placePosition)
 //            }
         }
+
     }
 
     fun addToListFromDb() {
@@ -118,6 +122,7 @@ class PlacesRecyclerAdapter(val context : Context, val places: List<Place>) : Re
 
 
     }
+
 
 
 
