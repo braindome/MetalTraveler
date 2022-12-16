@@ -71,24 +71,21 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val rating = ratingEditText.text.toString().toInt()
 //        val coordinates : LatLng = coordinateEditText.text.toString()
         val intent = Intent(this, RecycleListActivity::class.java)
-        val intent2 = Intent(this, DataManager::class.java)
-
-
         val place = Place(name, rating, type)
-        DataManager.places.add(place)
 
         db.collection("Places").add(place)
             .addOnSuccessListener { documentReference ->
                 Log.d("docId", "DocumentSnapshot written with ID: ${documentReference.id}")
                 val placeId = documentReference.id
-                intent2.putExtra("placeId", placeId)
+                place.documentId = placeId
+                Log.d("docRef ID", place.documentId!!)
             }
             .addOnFailureListener { e ->
                 Log.d("docId", "Error adding document")
             }
 
+        DataManager.places.add(place)
 
-        //finish()
         startActivity(intent)
     }
 }

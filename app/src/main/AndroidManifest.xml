@@ -13,6 +13,13 @@
         android:theme="@style/Theme.MetalTraveller"
         tools:targetApi="31">
         <activity
+            android:name=".RecycledItemActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".RecycleListActivity"
             android:exported="false">
             <meta-data
