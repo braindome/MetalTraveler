@@ -11,7 +11,9 @@ class Place(
     var rating : Int? = null,
     var type : String? = null,
     //val position : LatLng? = null,
+    var location : String? = null,
     var favorite : Boolean = false,
+    var expandable : Boolean = false,
     @DocumentId
     var documentId : String? = null) {
 }

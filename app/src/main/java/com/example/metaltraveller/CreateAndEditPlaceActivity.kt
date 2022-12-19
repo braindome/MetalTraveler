@@ -69,9 +69,10 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val name = nameEditText.text.toString()
         val type = typeEditText.text.toString()
         val rating = ratingEditText.text.toString().toInt()
+        val location = coordinateEditText.text.toString()
 //        val coordinates : LatLng = coordinateEditText.text.toString()
         val intent = Intent(this, RecycleListActivity::class.java)
-        val place = Place(name, rating, type)
+        val place = Place(name, rating, type, location)
 
         db.collection("Places").add(place)
             .addOnSuccessListener { documentReference ->
