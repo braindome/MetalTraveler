@@ -12,6 +12,7 @@ class Place(
     var type : String? = null,
     //val position : LatLng? = null,
     var favorite : Boolean = false,
+    var expandable : Boolean = false,
     @DocumentId
     var documentId : String? = null) {
 }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.widget.RelativeLayout
 import com.google.android.gms.common.data.DataHolder
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.ktx.firestore
@@ -39,11 +40,23 @@ class PlacesRecyclerAdapter(context : Context,
         holder.typeNameView.text = place.type
         holder.ratingTextView.text = place.rating.toString()
         holder.placePosition = position
+
         val holdPlacePosition = holder.deleteButton
+
+
 
         holdPlacePosition.setOnClickListener {
             removePlace(position)
             Log.d("holdPlace", "$position")
+        }
+
+        holder.itemView.setOnClickListener {
+            val place = places[position]
+            var isExpanded = place.expandable
+            //if (isExpanded) { place.expandable = true } else { place.expandable = false }
+            //holder.expandedRow.visibility = if (!isExpanded) View.GONE else View.VISIBLE
+            holder.expandedRow.visibility = View.VISIBLE
+            notifyItemChanged(position)
         }
     }
 
@@ -64,6 +77,9 @@ class PlacesRecyclerAdapter(context : Context,
         val placeLocationView = itemView.findViewById<TextView>(R.id.placeLocationView)
         var favoriteButton = itemView.findViewById<CheckBox>(R.id.checkBox)
         val deleteButton = itemView.findViewById<ImageButton>(R.id.deleteButton)
+
+
+        var expandedRow = itemView.findViewById<RelativeLayout>(R.id.expandedRowLayout)
         var placePosition = 0
 
 
@@ -75,6 +91,7 @@ class PlacesRecyclerAdapter(context : Context,
 //                context.startActivity(intent)
 //
 //            }
+
 
 
             favoriteButton.setOnClickListener() {
