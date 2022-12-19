@@ -18,6 +18,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
+
 class PlacesRecyclerAdapter(context : Context,
                             val places: List<Place>)
                             : RecyclerView.Adapter<PlacesRecyclerAdapter.ViewHolder>() {
@@ -76,6 +77,7 @@ class PlacesRecyclerAdapter(context : Context,
         val placeLocationView = itemView.findViewById<TextView>(R.id.placeLocationView)
         var favoriteButton = itemView.findViewById<CheckBox>(R.id.checkBox)
         val deleteButton = itemView.findViewById<ImageButton>(R.id.deleteButton)
+        val detailsButton = itemView.findViewById<TextView>(R.id.detailsButton)
 
 
         var expandedRow = itemView.findViewById<RelativeLayout>(R.id.expandedRowLayout)
@@ -91,7 +93,14 @@ class PlacesRecyclerAdapter(context : Context,
 //
 //            }
 
-
+            detailsButton.setOnClickListener {
+                val intent = Intent(itemView.context, DetailsActivity::class.java)
+                intent.putExtra("name", places[placePosition].name)
+                intent.putExtra("type", places[placePosition].type)
+                intent.putExtra("location", places[placePosition].location)
+                intent.putExtra("rating", places[placePosition].rating)
+                itemView.context.startActivity(intent)
+            }
 
             favoriteButton.setOnClickListener() {
                 DataManager.favorites[placePosition].favorite = favoriteButton.isChecked
@@ -143,3 +152,5 @@ class PlacesRecyclerAdapter(context : Context,
 
 
 }
+
+
