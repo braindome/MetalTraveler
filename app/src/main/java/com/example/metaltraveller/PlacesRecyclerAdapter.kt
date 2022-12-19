@@ -40,6 +40,7 @@ class PlacesRecyclerAdapter(context : Context,
         holder.nameTextView.text = place.name
         holder.typeNameView.text = place.type
         holder.ratingTextView.text = place.rating.toString()
+        holder.placeLocationView.text = place.location
         holder.placePosition = position
 
         val holdPlacePosition = holder.deleteButton
