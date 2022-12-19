@@ -43,6 +43,9 @@ class PlacesRecyclerAdapter(context : Context,
 
         val holdPlacePosition = holder.deleteButton
 
+        val isExpandable : Boolean = place.expandable
+        holder.expandedRow.visibility = if (isExpandable) View.VISIBLE else View.GONE
+
 
 
         holdPlacePosition.setOnClickListener {
@@ -52,10 +55,7 @@ class PlacesRecyclerAdapter(context : Context,
 
         holder.itemView.setOnClickListener {
             val place = places[position]
-            var isExpanded = place.expandable
-            //if (isExpanded) { place.expandable = true } else { place.expandable = false }
-            //holder.expandedRow.visibility = if (!isExpanded) View.GONE else View.VISIBLE
-            holder.expandedRow.visibility = View.VISIBLE
+            place.expandable = !place.expandable
             notifyItemChanged(position)
         }
     }
@@ -63,7 +63,6 @@ class PlacesRecyclerAdapter(context : Context,
     override fun getItemCount(): Int = places.size
 
     fun removePlace(position : Int) {
-
 
         DataManager.places[position].documentId?.let { removeFromFirestore(it, position) }
         //Log.d("Removed item id", DataManager.places[position].documentId!!)
