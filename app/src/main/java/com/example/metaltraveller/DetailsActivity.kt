@@ -1,9 +1,14 @@
 package com.example.metaltraveller
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Looper
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.*
 
 class DetailsActivity : AppCompatActivity() {
 
@@ -12,11 +17,37 @@ class DetailsActivity : AppCompatActivity() {
     lateinit var location : TextView
     lateinit var rating : TextView
 
+    // Location stuff
+    private val REQUEST_LOCATION = 1
+    lateinit var locationProvider : FusedLocationProviderClient
+    lateinit var locationRequest : LocationRequest
+    lateinit var locationCallback : LocationCallback
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
 
         val back : Button = findViewById(R.id.backButton)
+
+
+        // Location stuff
+        locationProvider = LocationServices.getFusedLocationProviderClient(this)
+        locationRequest = LocationRequest.Builder(2000).build()
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult : LocationResult) {
+                for (location in locationResult.locations) {
+                    Log.d("!!!", "lat: ${location.latitude}, lng: ${location.longitude}")
+                }
+            }
+        }
+
+        // Location stuff
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                REQUEST_LOCATION)
+        }
 
         name = findViewById(R.id.nameText)
         type = findViewById(R.id.typeText)
@@ -35,6 +66,45 @@ class DetailsActivity : AppCompatActivity() {
 
     fun backToList() {
         finish()
+    }
+
+    // Location stuff all the way down
+    fun startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
+            locationProvider.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                Looper.getMainLooper()
+            )
+        }
+    }
+
+    fun stopLocationUpdates() {
+        locationProvider.removeLocationUpdates(locationCallback)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        startLocationUpdates()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopLocationUpdates()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_LOCATION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startLocationUpdates()
+            }
+        }
     }
 }
 

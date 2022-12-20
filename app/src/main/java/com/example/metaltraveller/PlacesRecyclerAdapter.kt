@@ -79,6 +79,7 @@ class PlacesRecyclerAdapter(context : Context,
         var favoriteButton = itemView.findViewById<CheckBox>(R.id.checkBox)
         val deleteButton = itemView.findViewById<ImageButton>(R.id.deleteButton)
         val detailsButton = itemView.findViewById<TextView>(R.id.detailsButton)
+        val mapButton = itemView.findViewById<ImageButton>(R.id.mapButton)
 
 
         var expandedRow = itemView.findViewById<RelativeLayout>(R.id.expandedRowLayout)
@@ -101,6 +102,12 @@ class PlacesRecyclerAdapter(context : Context,
                 intent.putExtra("location", places[placePosition].location)
                 intent.putExtra("rating", places[placePosition].rating)
                 itemView.context.startActivity(intent)
+            }
+
+            mapButton.setOnClickListener {
+                val intent = Intent(itemView.context, MapsActivity::class.java)
+                itemView.context.startActivity(intent)
+                //TODO: send stuff to MapsActivity
             }
 
             favoriteButton.setOnClickListener() {

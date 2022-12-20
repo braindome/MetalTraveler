@@ -36,14 +36,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
+        android:id="@+id/expandedRowLayout"
         android:layout_width="0dp"
         android:layout_height="58dp"
         android:layout_marginTop="60dp"
-        android:id="@+id/expandedRowLayout"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone">
 
         <TextView
             android:id="@+id/detailsButton"
@@ -66,9 +67,9 @@
             android:layout_height="30dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="59dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="21dp"
+            android:layout_marginBottom="14dp"
             android:layout_toStartOf="@+id/deleteButton"
             android:text="favorite" />
 
@@ -81,6 +82,19 @@
             android:layout_marginTop="0dp"
             android:layout_marginEnd="21dp"
             app:srcCompat="@android:drawable/ic_menu_delete" />
+
+        <ImageButton
+            android:id="@+id/mapButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="19dp"
+            android:layout_toStartOf="@+id/checkBox"
+            android:background="#00FFFFFF"
+            app:srcCompat="@drawable/ic_baseline_location_on_24" />
 
     </RelativeLayout>
 
