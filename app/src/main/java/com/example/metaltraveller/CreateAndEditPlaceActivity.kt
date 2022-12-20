@@ -70,7 +70,7 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val type = typeEditText.text.toString()
         val rating = ratingEditText.text.toString().toInt()
         val location = coordinateEditText.text.toString()
-//        val coordinates : LatLng = coordinateEditText.text.toString()
+        //val coordinates = coordinateEditText.text.toString()
         val intent = Intent(this, RecycleListActivity::class.java)
         val place = Place(name, rating, type, location)
 
