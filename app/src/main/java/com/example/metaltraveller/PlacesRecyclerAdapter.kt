@@ -40,6 +40,7 @@ class PlacesRecyclerAdapter(context : Context,
         holder.nameTextView.text = place.name
         holder.typeNameView.text = place.type
         holder.ratingTextView.text = place.rating.toString()
+        holder.placeLocationView.text = place.location
         holder.placePosition = position
 
         val holdPlacePosition = holder.deleteButton
@@ -64,7 +65,6 @@ class PlacesRecyclerAdapter(context : Context,
     override fun getItemCount(): Int = places.size
 
     fun removePlace(position : Int) {
-
         DataManager.places[position].documentId?.let { removeFromFirestore(it, position) }
         //Log.d("Removed item id", DataManager.places[position].documentId!!)
 
@@ -78,6 +78,7 @@ class PlacesRecyclerAdapter(context : Context,
         var favoriteButton = itemView.findViewById<CheckBox>(R.id.checkBox)
         val deleteButton = itemView.findViewById<ImageButton>(R.id.deleteButton)
         val detailsButton = itemView.findViewById<TextView>(R.id.detailsButton)
+        val mapButton = itemView.findViewById<ImageButton>(R.id.mapButton)
 
 
         var expandedRow = itemView.findViewById<RelativeLayout>(R.id.expandedRowLayout)
@@ -85,13 +86,6 @@ class PlacesRecyclerAdapter(context : Context,
 
 
         init {
-
-//            itemView.setOnClickListener() {
-//                val intent = Intent(context, CreateAndEditPlaceActivity::class.java)
-//                intent.putExtra(PLACE_POSITION_KEY, placePosition)
-//                context.startActivity(intent)
-//
-//            }
 
             detailsButton.setOnClickListener {
                 val intent = Intent(itemView.context, DetailsActivity::class.java)
@@ -102,13 +96,15 @@ class PlacesRecyclerAdapter(context : Context,
                 itemView.context.startActivity(intent)
             }
 
+            mapButton.setOnClickListener {
+                val intent = Intent(itemView.context, MapsActivity::class.java)
+                itemView.context.startActivity(intent)
+                //TODO: send stuff to MapsActivity
+            }
+
             favoriteButton.setOnClickListener() {
                 DataManager.favorites[placePosition].favorite = favoriteButton.isChecked
             }
-
-//            deleteButton.setOnClickListener() {
-//                removePlace(placePosition)
-//            }
         }
 
     }
