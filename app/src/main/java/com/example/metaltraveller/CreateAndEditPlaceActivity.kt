@@ -2,6 +2,7 @@ package com.example.metaltraveller
 
 import android.content.Context
 import android.content.Intent
+import android.location.Address
 import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -76,7 +77,9 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val type = typeEditText.text.toString()
         val rating = ratingEditText.text.toString().toInt()
         val location = locationEditText.text.toString()
-        val position = getLatLngFromAddress(this, location)
+
+        val googleLatLng = getLatLngFromAddress(this, location)
+        val position = com.example.metaltraveller.MyLatLng(googleLatLng?.latitude, googleLatLng?.longitude)
 
         val intent = Intent(this, RecycleListActivity::class.java)
         val place = Place(name, rating, type, position, location)
@@ -105,7 +108,7 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         }
         val coder = Geocoder(context)
         val addressList = try {
-            coder.getFromLocationName(address, 1)
+            coder.getFromLocationName(address, 5)
         } catch (e: IOException) {
             return null
         }

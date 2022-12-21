@@ -2,6 +2,7 @@ package com.example.metaltraveller
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -14,6 +15,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
+    lateinit var latLng: LatLng
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,18 +42,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
         val adapter = PlacesInfoAdapter(this)
         mMap.setInfoWindowAdapter(adapter)
-        //createMarkers()
+        createMarkers()
     }
 
-//    fun createMarkers() {
-//        for (place in DataManager.places) {
-//            if (place.position != null) {
-//                val latLng = LatLng(place.position.latitude, place.position.longitude)
-//                val marker = mMap.addMarker(MarkerOptions().position(latLng))
-//                marker?.tag = place
-//            }
-//
-//        }
-//    }
+    fun createMarkers() {
+        for (place in DataManager.places) {
+            if (place.position != null) {
+                val myLat = place.position!!.lat
+                val myLng = place.position!!.lng
+
+                latLng = LatLng(myLat!!, myLng!!)
+
+                val marker = mMap.addMarker(MarkerOptions().position(latLng))
+                marker?.tag = place
+
+                Log.d("mark", "Marker added on ${latLng}")
+            }
+
+        }
+    }
 
 }
