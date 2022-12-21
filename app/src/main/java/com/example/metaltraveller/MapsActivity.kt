@@ -40,24 +40,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
         val adapter = PlacesInfoAdapter(this)
         mMap.setInfoWindowAdapter(adapter)
-        createMarkers()
+        //createMarkers()
     }
 
-    fun createMarkers() {
-        for (place in DataManager.places) {
-            val marker = place.position?.let { MarkerOptions().position(it) }
-                ?.let { mMap.addMarker(it) }
-            marker?.tag = place
-        }
-    }
+//    fun createMarkers() {
+//        for (place in DataManager.places) {
+//            if (place.position != null) {
+//                val latLng = LatLng(place.position.latitude, place.position.longitude)
+//                val marker = mMap.addMarker(MarkerOptions().position(latLng))
+//                marker?.tag = place
+//            }
+//
+//        }
+//    }
 
-    // Add hardcoded markers,
-    fun createMockPlaces() {
-        var sthlm = LatLng(59.3, 18.0)
-
-        var marker = mMap.addMarker(MarkerOptions()
-            .position(sthlm)
-            .title("Stockholm")
-            .snippet("Fuck Stockholm"))
-    }
 }

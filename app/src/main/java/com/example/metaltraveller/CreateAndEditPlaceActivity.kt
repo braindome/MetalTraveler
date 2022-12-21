@@ -1,14 +1,21 @@
 package com.example.metaltraveller
 
+import android.content.Context
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.type.LatLng
+import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.IOException
 
 const val PLACE_POSITION_KEY = "PLACE_POSITION"
 const val POSITION_NOT_SET = -1
@@ -18,7 +25,7 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
     lateinit var nameEditText : EditText
     lateinit var typeEditText: EditText
     lateinit var ratingEditText: EditText
-    lateinit var coordinateEditText: EditText
+    lateinit var locationEditText: EditText
     val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +46,7 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         nameEditText = findViewById(R.id.placeNameEdit)
         typeEditText = findViewById(R.id.placeTypeEdit)
         ratingEditText = findViewById(R.id.placeRatingEdit)
-        coordinateEditText = findViewById(R.id.coordinatesEdit)
+        locationEditText = findViewById(R.id.locationEdit)
 
         addButton.setOnClickListener() {
 
@@ -69,10 +76,11 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val name = nameEditText.text.toString()
         val type = typeEditText.text.toString()
         val rating = ratingEditText.text.toString().toInt()
-        val location = coordinateEditText.text.toString()
-        //val coordinates = coordinateEditText.text.toString()
+        val location = locationEditText.text.toString()
+        val position = getLatLngFromAddress(this, location)
+
         val intent = Intent(this, RecycleListActivity::class.java)
-        val place = Place(name, rating, type, location)
+        val place = Place(name, rating, type, position, location)
 
         db.collection("Places").add(place)
             .addOnSuccessListener { documentReference ->
@@ -86,7 +94,35 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
             }
 
         DataManager.places.add(place)
+        Log.d("Pos!!!", "GeoPoint values: $position")
 
         startActivity(intent)
     }
+
+
+    fun getLatLngFromAddress(context: Context, address: String?): LatLng? {
+        if (address == null) {
+            return null
+        }
+        val coder = Geocoder(context)
+        val addressList = try {
+            coder.getFromLocationName(address, 1)
+        } catch (e: IOException) {
+            return null
+        }
+        if (addressList != null) {
+            if (addressList.isEmpty()) {
+                return null
+            }
+        }
+        val location = addressList?.get(0)
+        if (location != null) {
+            return LatLng(location.latitude, location.longitude)
+        } else {
+            return null
+        }
+    }
+
+
+
 }
