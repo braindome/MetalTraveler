@@ -64,9 +64,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun testMarker() {
-        val trani = Place("Trani", 5, "City", MyLatLng(41.26, 16.41), "Puglia")
-        val traniLat = trani.position?.lat
-        val traniLng = trani.position?.lng
+
         val traniMarker = mMap.addMarker(MarkerOptions()
             .position(LatLng(41.26, 16.41))
             .title("Casa")
