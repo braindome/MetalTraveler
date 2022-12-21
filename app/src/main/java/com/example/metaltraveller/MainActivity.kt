@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
 
         val db = Firebase.firestore
 
-
         auth = Firebase.auth
         emailView = findViewById(R.id.emailEditText)
         passwordView = findViewById(R.id.passwordEditText)

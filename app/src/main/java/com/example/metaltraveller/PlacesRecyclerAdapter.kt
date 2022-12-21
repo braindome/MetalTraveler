@@ -65,7 +65,6 @@ class PlacesRecyclerAdapter(context : Context,
     override fun getItemCount(): Int = places.size
 
     fun removePlace(position : Int) {
-
         DataManager.places[position].documentId?.let { removeFromFirestore(it, position) }
         //Log.d("Removed item id", DataManager.places[position].documentId!!)
 
@@ -88,13 +87,6 @@ class PlacesRecyclerAdapter(context : Context,
 
         init {
 
-//            itemView.setOnClickListener() {
-//                val intent = Intent(context, CreateAndEditPlaceActivity::class.java)
-//                intent.putExtra(PLACE_POSITION_KEY, placePosition)
-//                context.startActivity(intent)
-//
-//            }
-
             detailsButton.setOnClickListener {
                 val intent = Intent(itemView.context, DetailsActivity::class.java)
                 intent.putExtra("name", places[placePosition].name)
@@ -113,10 +105,6 @@ class PlacesRecyclerAdapter(context : Context,
             favoriteButton.setOnClickListener() {
                 DataManager.favorites[placePosition].favorite = favoriteButton.isChecked
             }
-
-//            deleteButton.setOnClickListener() {
-//                removePlace(placePosition)
-//            }
         }
 
     }

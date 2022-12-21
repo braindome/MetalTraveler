@@ -1,7 +1,6 @@
 package com.example.metaltraveller
 
 
-import androidx.versionedparcelable.ParcelField
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.DocumentId
 
@@ -12,12 +11,15 @@ class Place(
     var name : String? = null,
     var rating : Int? = null,
     var type : String? = null,
-    val position : LatLng? = null,
+    var position : LatLng? = null,
     var location : String? = null,
     var favorite : Boolean = false,
     var expandable : Boolean = false,
     @DocumentId
     var documentId : String? = null) {
-
-
+    constructor() : this("", 0, "", LatLng(0.0,0.0),
+                        "", false, false, null
+    )
 }
+
+val place = Place()
