@@ -42,8 +42,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
         val adapter = PlacesInfoAdapter(this)
         mMap.setInfoWindowAdapter(adapter)
-        //createMarkers()
-        testMarker()
+        createMarkers()
     }
 
     fun createMarkers() {
@@ -63,13 +62,5 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    fun testMarker() {
-
-        val traniMarker = mMap.addMarker(MarkerOptions()
-            .position(LatLng(41.26, 16.41))
-            .title("Casa")
-            .snippet("Costa e campagna"))
-
-    }
 
 }

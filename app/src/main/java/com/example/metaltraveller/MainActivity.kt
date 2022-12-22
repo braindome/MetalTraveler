@@ -33,14 +33,6 @@ class MainActivity : AppCompatActivity() {
         emailView = findViewById(R.id.emailEditText)
         passwordView = findViewById(R.id.passwordEditText)
 
-        // Rockbaren coordinates 57.70 11.97
-        // Pustervik coordinates 57-70 11.95
-//
-//        val item1 = Place("Rockbaren", 1, "Bar")
-//        val item2 = Place("Pustervik", 3, "Venue")
-//
-//        db.collection("Places").add(item1)
-//        db.collection("Places").add(item2)
 
         val docRef = db.collection("Places")
 
@@ -130,7 +122,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun goToAddActivity() {
-        val intent = Intent(this, CreateAndEditPlaceActivity::class.java)
+        val intent = Intent(this, RecycleListActivity::class.java)
         startActivity(intent)
     }
 }
