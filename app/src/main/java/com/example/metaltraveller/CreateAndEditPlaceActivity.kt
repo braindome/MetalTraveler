@@ -2,13 +2,13 @@ package com.example.metaltraveller
 
 import android.content.Context
 import android.content.Intent
-import android.location.Address
 import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.RatingBar
 import com.google.firebase.ktx.Firebase
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.FirebaseFirestore
@@ -22,7 +22,7 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
 
     lateinit var nameEditText : EditText
     lateinit var typeEditText: EditText
-    lateinit var ratingEditText: EditText
+    lateinit var ratingEditText: RatingBar
     lateinit var locationEditText: EditText
     //val db = Firebase.firestore
     lateinit var db : FirebaseFirestore
@@ -45,7 +45,7 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
 
         nameEditText = findViewById(R.id.placeNameEdit)
         typeEditText = findViewById(R.id.placeTypeEdit)
-        ratingEditText = findViewById(R.id.placeRatingEdit)
+        ratingEditText = findViewById(R.id.placeRatingEdit) as RatingBar
         locationEditText = findViewById(R.id.locationEdit)
 
         addButton.setOnClickListener() {
@@ -59,23 +59,16 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
 
         nameEditText.setText(place.name)
         typeEditText.setText(place.type)
-        ratingEditText.setText(place.rating.toString())
+        ratingEditText.rating
 
         finish()
     }
 
-    fun editPlace(position : Int) {
-        DataManager.places[position].name = nameEditText.text.toString()
-        DataManager.places[position].type = typeEditText.text.toString()
-        DataManager.places[position].rating = ratingEditText.text.toString().toInt()
-
-        finish()
-    }
 
     fun addNewPlace() {
         val name = nameEditText.text.toString()
         val type = typeEditText.text.toString()
-        val rating = ratingEditText.text.toString().toInt()
+        val rating = ratingEditText.rating
         val location = locationEditText.text.toString()
 
         val googleLatLng = getLatLngFromAddress(this, location)
@@ -95,9 +88,13 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
                 Log.d("docId", "Error adding document")
             }
 
+        ratingEditText.setOnRatingBarChangeListener { ratingEditText, rating, fromUser ->
+            place.rating = rating
+        }
+
+
         DataManager.places.add(place)
         //Log.d("Pos!!!", "GeoPoint values: $position")
-
         startActivity(intent)
     }
 

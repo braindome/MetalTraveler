@@ -10,7 +10,7 @@
         android:id="@+id/addPlaceButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="90dp"
         android:text="Add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -41,28 +41,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/placeNameEdit" />
 
-    <EditText
+    <RatingBar
         android:id="@+id/placeRatingEdit"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="50dp"
-        android:ems="10"
-        android:hint="Rating"
-        android:inputType="number"
+        style="?android:attr/ratingBarStyleIndicator"
+        android:layout_width="178dp"
+        android:layout_height="45dp"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:stepSize="0.5"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/placeTypeEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/locationEdit"
         android:layout_width="125dp"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
-        android:layout_marginEnd="30dp"
         android:ems="10"
         android:hint="Location"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/placeTypeEdit" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Rating"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationEdit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

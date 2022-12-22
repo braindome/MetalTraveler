@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun goToAddActivity() {
-        val intent = Intent(this, RecycleListActivity::class.java)
+        val intent = Intent(this, CreateAndEditPlaceActivity::class.java)
         startActivity(intent)
     }
 }
