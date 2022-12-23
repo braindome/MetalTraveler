@@ -1,14 +1,14 @@
 package com.example.metaltraveller
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.RatingBar
+import android.view.View
+import android.widget.*
 import com.google.firebase.ktx.Firebase
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,9 +21,9 @@ const val POSITION_NOT_SET = -1
 class CreateAndEditPlaceActivity : AppCompatActivity() {
 
     lateinit var nameEditText : EditText
-    lateinit var typeEditText: EditText
+    lateinit var spinner : Spinner
     lateinit var ratingEditText: RatingBar
-    lateinit var locationEditText: EditText
+    lateinit var locationEditText : EditText
     //val db = Firebase.firestore
     lateinit var db : FirebaseFirestore
 
@@ -43,10 +43,21 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
 //            }
 //        }
 
+
+
         nameEditText = findViewById(R.id.placeNameEdit)
-        typeEditText = findViewById(R.id.placeTypeEdit)
+        spinner = findViewById(R.id.spinner)
         ratingEditText = findViewById(R.id.placeRatingEdit) as RatingBar
         locationEditText = findViewById(R.id.locationEdit)
+
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.place_types,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+        }
 
         addButton.setOnClickListener() {
 
@@ -54,21 +65,11 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         }
     }
 
-    fun displayPlace(position: Int) {
-        val place = DataManager.places[position]
-
-        nameEditText.setText(place.name)
-        typeEditText.setText(place.type)
-        ratingEditText.rating
-
-        finish()
-    }
-
 
     fun addNewPlace() {
         val name = nameEditText.text.toString()
-        val type = typeEditText.text.toString()
         val rating = ratingEditText.rating
+        val type = spinner.selectedItem.toString()
         val location = locationEditText.text.toString()
 
         val googleLatLng = getLatLngFromAddress(this, location)
@@ -121,7 +122,16 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
             return null
         }
     }
+}
 
+class SpinnerActivity : Activity(), AdapterView.OnItemSelectedListener {
 
+    override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+        // An item was selected. You can retrieve the selected item using
+        parent.getItemAtPosition(pos).toString()
+    }
 
+    override fun onNothingSelected(parent: AdapterView<*>) {
+        // Another interface callback
+    }
 }
