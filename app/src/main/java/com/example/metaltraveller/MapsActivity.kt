@@ -57,9 +57,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.logout_button -> {
-                val intent = Intent(this, MainActivity::class.java)
-                Utils().logOut()
-                startActivity(intent)
+                Utils().logOut(this)
                 true
             }
             else -> super.onOptionsItemSelected(item)

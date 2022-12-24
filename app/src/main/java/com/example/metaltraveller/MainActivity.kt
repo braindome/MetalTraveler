@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
 
         db = Firebase.firestore
         auth = Firebase.auth
-
         emailView = findViewById(R.id.emailEditText)
         passwordView = findViewById(R.id.passwordEditText)
 
@@ -49,9 +48,6 @@ class MainActivity : AppCompatActivity() {
             usersRef.document(firebaseUser.uid).set(user)
         }
 
-
-
-
         val signUpButton = findViewById<Button>(R.id.signUpBtn)
         val signInButton = findViewById<Button>(R.id.signInBtn)
 
@@ -63,11 +59,6 @@ class MainActivity : AppCompatActivity() {
 
         signInButton.setOnClickListener() {
             signIn()
-        }
-
-        if (user != null) {
-
-            goToAddActivity()
         }
 
 //        docRef.get().addOnSuccessListener { documentSnapShot ->
@@ -143,8 +134,7 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-
-
+    
 
     fun goToAddActivity() {
         val intent = Intent(this, CreateAndEditPlaceActivity::class.java)

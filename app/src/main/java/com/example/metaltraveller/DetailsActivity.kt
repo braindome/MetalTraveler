@@ -92,8 +92,7 @@ class DetailsActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.logout_button -> {
-                Utils().logOut()
-                finish()
+                Utils().logOut(this)
                 true
             }
             else -> super.onOptionsItemSelected(item)

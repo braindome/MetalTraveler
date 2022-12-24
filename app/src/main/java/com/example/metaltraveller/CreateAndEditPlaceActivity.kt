@@ -62,7 +62,6 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         }
 
         addButton.setOnClickListener() {
-
             addNewPlace()
         }
     }
@@ -76,7 +75,7 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.logout_button -> {
-                Utils().logOut()
+                Utils().logOut(this)
                 finish()
                 true
             }
