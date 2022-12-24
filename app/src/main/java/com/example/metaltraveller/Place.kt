@@ -3,6 +3,7 @@ package com.example.metaltraveller
 
 //import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.DocumentId
+import java.io.Serializable
 
 
 // NOTE Each argument could be null so remember ? and null in the declaration.
@@ -16,5 +17,12 @@ data class Place(
     var favorite: Boolean = false,
     var expandable: Boolean = false,
     @DocumentId
-    var documentId: String? = "") {
+    var documentId: String? = "",
+    //val user : User? = null
+                            ) {
+}
+
+data class User(@DocumentId var documentId : String? = null,
+                            var email : String? = null) : Serializable {
+
 }

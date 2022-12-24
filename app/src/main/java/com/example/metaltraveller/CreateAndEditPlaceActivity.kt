@@ -7,6 +7,8 @@ import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import com.google.firebase.ktx.Firebase
@@ -60,9 +62,26 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         }
 
         addButton.setOnClickListener() {
-
             addNewPlace()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.toolbar_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.logout_button -> {
+                Utils().logOut(this)
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
     }
 
 

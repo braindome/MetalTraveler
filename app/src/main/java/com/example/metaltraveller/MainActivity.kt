@@ -8,7 +8,10 @@ import android.widget.Button
 import android.widget.EditText
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -22,22 +25,33 @@ class MainActivity : AppCompatActivity() {
     lateinit var auth : FirebaseAuth
     lateinit var emailView : EditText
     lateinit var passwordView : EditText
+    lateinit var db : FirebaseFirestore
+    lateinit var docRef : CollectionReference
+    lateinit var usersRef : CollectionReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val db = Firebase.firestore
-
+        db = Firebase.firestore
         auth = Firebase.auth
         emailView = findViewById(R.id.emailEditText)
         passwordView = findViewById(R.id.passwordEditText)
 
+        val user = User(null, auth.currentUser?.email)
+        val firebaseUser = auth.currentUser
 
-        val docRef = db.collection("Places")
+        docRef = db.collection("Places")
+        usersRef = db.collection("Users")
+
+        if (firebaseUser != null) {
+            usersRef.document(firebaseUser.uid).set(user)
+        }
 
         val signUpButton = findViewById<Button>(R.id.signUpBtn)
         val signInButton = findViewById<Button>(R.id.signInBtn)
+
+
 
         signUpButton.setOnClickListener() {
             signUp()
@@ -45,10 +59,6 @@ class MainActivity : AppCompatActivity() {
 
         signInButton.setOnClickListener() {
             signIn()
-        }
-
-        if (auth.currentUser != null) {
-            goToAddActivity()
         }
 
 //        docRef.get().addOnSuccessListener { documentSnapShot ->
@@ -75,6 +85,8 @@ class MainActivity : AppCompatActivity() {
             printPlaces()
 
         }
+
+
     }
 
     fun printPlaces() {
@@ -105,6 +117,7 @@ class MainActivity : AppCompatActivity() {
     fun signUp() {
         val email = emailView.text.toString()
         val password = passwordView.text.toString()
+        val user = User(documentId = null, email)
 
         if (email.isEmpty() || password.isEmpty()) {
             return
@@ -113,6 +126,7 @@ class MainActivity : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Log.d("!!!", "Create success")
+                //user.documentId?.let { user.email?.let { it1 -> addUserToDb(it, it1) } }
                 goToAddActivity()
             } else {
                 Log.d("!!!", "User is not created ${task.exception}")
@@ -120,9 +134,20 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
+    
 
     fun goToAddActivity() {
         val intent = Intent(this, CreateAndEditPlaceActivity::class.java)
         startActivity(intent)
+    }
+
+    fun addUserToDb(uid : String, email : String) {
+        usersRef.add(User(uid, email))
+            .addOnSuccessListener { documentReference ->
+                Log.d("UserSnap", "DocumentSnapshot added with id: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.d("UserSnap", "User not added to database", e)
+            }
     }
 }
