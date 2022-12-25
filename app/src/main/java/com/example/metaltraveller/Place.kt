@@ -14,6 +14,7 @@ data class Place(
     var type: String? = "",
     var position: MyLatLng? = MyLatLng(0.0, 0.0),
     var location: String? = "",
+    var imageUrls : MutableList<String>? = null,
     var favorite: Boolean = false,
     var expandable: Boolean = false,
     @DocumentId
