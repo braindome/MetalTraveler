@@ -19,6 +19,7 @@ class DetailsActivity : AppCompatActivity() {
     lateinit var type : TextView
     lateinit var location : TextView
     lateinit var rating : TextView
+    lateinit var imageUrls : ArrayList<String>
 
     // Location stuff
     private val REQUEST_LOCATION = 1
