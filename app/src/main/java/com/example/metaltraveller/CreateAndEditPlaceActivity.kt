@@ -11,11 +11,13 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
 import java.io.IOException
 
 const val PLACE_POSITION_KEY = "PLACE_POSITION"
@@ -27,19 +29,26 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
     lateinit var spinner : Spinner
     lateinit var ratingEditText: RatingBar
     lateinit var locationEditText : EditText
-    //val db = Firebase.firestore
     lateinit var db : FirebaseFirestore
+    lateinit var storage : FirebaseStorage
     lateinit var imgUrl : EditText
     lateinit var addImg : Button
-    lateinit var placeImage : ImageView
-    lateinit var urlList: MutableList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_and_edit_place)
         db = Firebase.firestore
+        storage = Firebase.storage
         val placePosition = intent.getIntExtra(PLACE_POSITION_KEY, POSITION_NOT_SET)
         val addButton = findViewById<Button>(R.id.addPlaceButton)
+
+        val storageRef = storage.reference
+        val pustervikRef = storageRef.child("images/pustervik.jpg")
+        val rockbarenRef = storageRef.child("rockbaren.jpg")
+        val ulleviRef = storageRef.child("ullevi.jpg")
+        val abyssRef = storageRef.child("abyss.jpg")
+        var imagesRef : StorageReference? = storageRef.child("Images")
+        var spaceRef = storageRef.child("images/space.jpg")
 
 //        if (placePosition != POSITION_NOT_SET) {
 //            displayPlace(placePosition)
@@ -54,7 +63,6 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         locationEditText = findViewById(R.id.locationEdit)
         imgUrl = findViewById(R.id.imageUrlText)
         addImg = findViewById(R.id.addImageButton)
-        placeImage = findViewById(R.id.placePrevievImageView)
 
         ArrayAdapter.createFromResource(
             this,
@@ -66,7 +74,7 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         }
 
         addImg.setOnClickListener {
-            addImageUrlToList()
+            uploadLocalFile()
         }
 
         addButton.setOnClickListener() {
@@ -92,16 +100,8 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
 
     }
 
-    fun addImageUrlToList() {
-        val url = imgUrl.text.toString()
-        urlList.add(url)
-        //val image = placeImage
-        val image = findViewById<ImageView>(R.id.placePrevievImageView)
-
-        Glide.with(this)
-            .load(url)
-            .into(image)
-
+    fun uploadLocalFile() {
+        //TODO: https://firebase.google.com/docs/storage
     }
 
 
@@ -110,13 +110,12 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val rating = ratingEditText.rating
         val type = spinner.selectedItem.toString()
         val location = locationEditText.text.toString()
-        val images = urlList
 
         val googleLatLng = getLatLngFromAddress(this, location)
         val position = com.example.metaltraveller.MyLatLng(googleLatLng?.latitude, googleLatLng?.longitude)
 
         val intent = Intent(this, RecycleListActivity::class.java)
-        val place = Place(name, rating, type, position, location, images)
+        val place = Place(name, rating, type, position, location)
 
         db.collection("Places").add(place)
             .addOnSuccessListener { documentReference ->
