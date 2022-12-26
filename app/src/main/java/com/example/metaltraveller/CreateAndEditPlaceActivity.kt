@@ -132,8 +132,8 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
             place.rating = rating
         }
 
-
-        DataManager.places.add(place)
+        Utils().populatePlaceListFromFirebase()
+        //DataManager.places.add(place)
         //Log.d("Pos!!!", "GeoPoint values: $position")
         startActivity(intent)
     }
