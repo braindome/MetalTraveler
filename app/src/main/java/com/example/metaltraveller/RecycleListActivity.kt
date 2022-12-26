@@ -26,6 +26,8 @@ class RecycleListActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = PlacesRecyclerAdapter(this, DataManager.places)
 
+        Utils().populatePlaceListFromFirebase()
+
         val addButton = findViewById<FloatingActionButton>(R.id.floatAddButton)
 
         addButton.setOnClickListener {

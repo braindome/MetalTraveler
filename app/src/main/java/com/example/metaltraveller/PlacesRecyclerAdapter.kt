@@ -19,8 +19,7 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 
-class PlacesRecyclerAdapter(context : Context,
-                            val places: List<Place>)
+class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
                             : RecyclerView.Adapter<PlacesRecyclerAdapter.ViewHolder>() {
 
     val layoutInflater = LayoutInflater.from(context)
@@ -134,7 +133,7 @@ class PlacesRecyclerAdapter(context : Context,
         docRefPlaces.document(documentId).delete()
             .addOnSuccessListener {
                 Log.d("itemRemoval", "DocumentSnapshot successfully deleted!")
-                DataManager.places.removeAt(position)
+                //DataManager.places.removeAt(position)
                 notifyDataSetChanged()
             }
             .addOnFailureListener {
