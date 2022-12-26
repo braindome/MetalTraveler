@@ -12,6 +12,11 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.RelativeLayout
+import android.widget.Switch
+import androidx.appcompat.widget.AppCompatImageButton
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.SwitchCompat
 import com.google.android.gms.common.data.DataHolder
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.ktx.firestore
@@ -74,10 +79,10 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
         val typeNameView = itemView.findViewById<TextView>(R.id.placeTypeView)
         val ratingTextView = itemView.findViewById<TextView>(R.id.placeRatingView)
         val placeLocationView = itemView.findViewById<TextView>(R.id.placeLocationView)
-        var favoriteButton = itemView.findViewById<CheckBox>(R.id.checkBox)
-        val deleteButton = itemView.findViewById<ImageButton>(R.id.deleteButton)
-        val detailsButton = itemView.findViewById<TextView>(R.id.detailsButton)
-        val mapButton = itemView.findViewById<ImageButton>(R.id.mapButton)
+        //var favoriteButton = itemView.findViewById<SwitchCompat>(R.id.switch1)
+        val deleteButton = itemView.findViewById<AppCompatImageButton>(R.id.deleteButton)
+        val detailsButton = itemView.findViewById<AppCompatTextView>(R.id.detailsButton)
+        val mapButton = itemView.findViewById<AppCompatImageView>(R.id.mapButton)
 
 
         var expandedRow = itemView.findViewById<RelativeLayout>(R.id.expandedRowLayout)
@@ -101,9 +106,9 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
                 //TODO: send stuff to MapsActivity
             }
 
-            favoriteButton.setOnClickListener() {
-                DataManager.favorites[placePosition].favorite = favoriteButton.isChecked
-            }
+//            favoriteButton.setOnClickListener() {
+//                DataManager.favorites[placePosition].favorite = favoriteButton.isChecked
+//            }
         }
 
     }

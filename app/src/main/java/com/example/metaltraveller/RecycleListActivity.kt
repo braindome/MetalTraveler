@@ -21,6 +21,8 @@ class RecycleListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recycle_list)
 
+        setSupportActionBar(findViewById(R.id.detailsToolbar))
+
 
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)

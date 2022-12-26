@@ -39,6 +39,8 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_and_edit_place)
         db = Firebase.firestore
         storage = Firebase.storage
+        setSupportActionBar(findViewById(R.id.detailsToolbar))
+
         val placePosition = intent.getIntExtra(PLACE_POSITION_KEY, POSITION_NOT_SET)
         val addButton = findViewById<Button>(R.id.addPlaceButton)
 
