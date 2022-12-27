@@ -86,6 +86,16 @@
             android:layout_toStartOf="@+id/deleteButton"
             android:text="Fav" />
 
+        <TextView
+            android:id="@+id/addedByView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="84dp"
+            android:layout_marginBottom="4dp"
+            android:text="TextView" />
+
     </RelativeLayout>
 
     <TextView

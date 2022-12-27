@@ -46,6 +46,7 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
         holder.ratingTextView.text = place.rating.toString()
         holder.placeLocationView.text = place.location
         holder.placePosition = position
+        "Place added by: ${place.userId}".also { holder.addedBy.text = it }
 
         val holdPlacePosition = holder.deleteButton
 
@@ -83,6 +84,7 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
         val deleteButton = itemView.findViewById<AppCompatImageButton>(R.id.deleteButton)
         val detailsButton = itemView.findViewById<AppCompatTextView>(R.id.detailsButton)
         val mapButton = itemView.findViewById<AppCompatImageView>(R.id.mapButton)
+        val addedBy = itemView.findViewById<TextView>(R.id.addedByView)
 
 
         var expandedRow = itemView.findViewById<RelativeLayout>(R.id.expandedRowLayout)
@@ -111,26 +113,6 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
 //            }
         }
 
-    }
-
-    fun addToListFromDb() {
-        docRefPlaces.addSnapshotListener { snapshot, e ->
-            if (snapshot != null) {
-                DataManager.places.clear()
-                for (document in snapshot.documents) {
-                    val item = document.toObject<Place>()
-                    if (item != null) {
-                        DataManager.places.add(item)
-                    }
-                }
-            }
-        }
-    }
-
-    fun printPlaces() {
-        for (item in DataManager.places) {
-            Log.d("Place list!!!!", "${item.name}")
-        }
     }
 
     fun removeFromFirestore(documentId: String, position: Int) {
