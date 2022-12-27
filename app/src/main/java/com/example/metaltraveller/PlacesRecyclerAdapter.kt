@@ -1,26 +1,20 @@
 package com.example.metaltraveller
 
+import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.ImageButton
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
-import android.content.Context
-import android.os.Bundle
-import android.util.Log
 import android.widget.RelativeLayout
-import android.widget.Switch
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.appcompat.widget.SwitchCompat
-import com.google.android.gms.common.data.DataHolder
-import com.google.firebase.firestore.DocumentId
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 
@@ -29,12 +23,15 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
 
     val layoutInflater = LayoutInflater.from(context)
     val db = Firebase.firestore
+    val auth = Firebase.auth
     val docRefPlaces = db.collection("Places")
+    val context = this
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = layoutInflater.inflate(R.layout.recycled_item_layout, parent, false)
-        return ViewHolder(itemView)
+
+        return ViewHolder(itemView, parent.context)
 
     }
 
@@ -55,8 +52,10 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
 
 
 
+
+
         holdPlacePosition.setOnClickListener {
-            removePlace(position)
+            holder.removePlace(position)
             Log.d("holdPlace", "$position")
         }
 
@@ -69,13 +68,11 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
 
     override fun getItemCount(): Int = places.size
 
-    fun removePlace(position : Int) {
-        DataManager.places[position].documentId?.let { removeFromFirestore(it, position) }
-        //Log.d("Removed item id", DataManager.places[position].documentId!!)
 
-    }
 
-    inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView : View, val context: Context) : RecyclerView.ViewHolder(itemView) {
+
+
         val nameTextView = itemView.findViewById<TextView>(R.id.placeNameView)
         val typeNameView = itemView.findViewById<TextView>(R.id.placeTypeView)
         val ratingTextView = itemView.findViewById<TextView>(R.id.placeRatingView)
@@ -89,6 +86,30 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
 
         var expandedRow = itemView.findViewById<RelativeLayout>(R.id.expandedRowLayout)
         var placePosition = 0
+
+        fun toastNoAuth() {
+            val message = "Not allowed to delete another user's item."
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
+
+        fun removePlace(position : Int) {
+            DataManager.places[position].documentId?.let { removeFromFirestore(it, position) }
+        }
+
+        fun removeFromFirestore(documentId : String, position: Int) {
+            if (auth.currentUser?.uid != places[position].userId) {
+                toastNoAuth()
+            } else {
+                docRefPlaces.document(documentId).delete()
+                    .addOnSuccessListener {
+                        Log.d("itemRemoval", "DocumentSnapshot successfully deleted!")
+                        notifyDataSetChanged()
+                    }
+                    .addOnFailureListener {
+                        Log.d("itemRemoval", "Document not deleted.")
+                    }
+            }
+        }
 
 
         init {
@@ -114,23 +135,6 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
         }
 
     }
-
-    fun removeFromFirestore(documentId: String, position: Int) {
-
-        docRefPlaces.document(documentId).delete()
-            .addOnSuccessListener {
-                Log.d("itemRemoval", "DocumentSnapshot successfully deleted!")
-                //DataManager.places.removeAt(position)
-                notifyDataSetChanged()
-            }
-            .addOnFailureListener {
-                Log.d("itemRemoval", "Item not deleted")
-            }
-
-
-    }
-
-
 
 
 }
