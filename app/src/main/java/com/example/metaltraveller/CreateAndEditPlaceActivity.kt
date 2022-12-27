@@ -40,6 +40,7 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_and_edit_place)
+        auth = Firebase.auth
         db = Firebase.firestore
         storage = Firebase.storage
         setSupportActionBar(findViewById(R.id.detailsToolbar))
@@ -115,7 +116,8 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val rating = ratingEditText.rating
         val type = spinner.selectedItem.toString()
         val location = locationEditText.text.toString()
-        val user = intent.getStringExtra("userId")
+        //val user = intent.getStringExtra("userId")
+        val user = auth.currentUser?.uid
 
         val googleLatLng = getLatLngFromAddress(this, location)
         val position = com.example.metaltraveller.MyLatLng(googleLatLng?.latitude, googleLatLng?.longitude)
