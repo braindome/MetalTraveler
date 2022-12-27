@@ -2,6 +2,7 @@ package com.example.metaltraveller
 
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -41,5 +42,6 @@ class Utils {
                 }
             }
     }
+    
 
 }

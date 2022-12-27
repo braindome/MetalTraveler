@@ -117,7 +117,6 @@ class MainActivity : AppCompatActivity() {
     fun signUp() {
         val email = emailView.text.toString()
         val password = passwordView.text.toString()
-        val user = User(documentId = null, email)
 
         if (email.isEmpty() || password.isEmpty()) {
             return
@@ -138,6 +137,7 @@ class MainActivity : AppCompatActivity() {
 
     fun goToAddActivity() {
         val intent = Intent(this, RecycleListActivity::class.java)
+        intent.putExtra("userId", auth.uid)
         startActivity(intent)
     }
 

@@ -16,15 +16,16 @@ data class Place(
     var position: MyLatLng? = MyLatLng(0.0, 0.0),
     var location: String? = "",
     var image : Bitmap? = null,
+    val userId: String? = null,
     var favorite: Boolean = false,
     var expandable: Boolean = false,
     @DocumentId
     var documentId: String? = "",
-    //val user : User? = null
+
                             ) {
 }
 
-data class User(@DocumentId var documentId : String? = null,
+data class User(@DocumentId var userId : String? = null,
                             var email : String? = null) : Serializable {
 
 }
