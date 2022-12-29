@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -30,8 +31,8 @@ class DetailsActivity : AppCompatActivity() {
     lateinit var rating : TextView
     lateinit var imageUrls : ArrayList<String>
 
-    // Image stuff
-    private lateinit var binding: ActivityMainBinding
+    lateinit var browseButton : Button
+    lateinit var itemPhoto : ImageView
 
     companion object {
         val IMAGE_REQUEST_CODE = 1_000;
@@ -45,19 +46,16 @@ class DetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        val browse : Button = findViewById(R.id.browseButton)
-
-        //binding.browseeButton
-
-
         setContentView(R.layout.activity_details)
-
 
         val back : Button = findViewById(R.id.backButton)
         setSupportActionBar(findViewById(R.id.detailsToolbar))
+        browseButton = findViewById(R.id.browseButton)
+        itemPhoto = findViewById(R.id.itemPhoto)
+
+        browseButton.setOnClickListener {
+            pickImageFromGallery()
+        }
 
 
         // Location stuff
@@ -103,7 +101,7 @@ class DetailsActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
-            binding.itemPhoto.setImageURI(data?.data)
+            itemPhoto.setImageURI(data?.data)
         }
     }
 
