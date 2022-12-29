@@ -1,4 +1,4 @@
-package com.example.metaltraveller
+package com.example.metaltraveller.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,9 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import com.google.android.gms.maps.model.LatLng
+import com.example.metaltraveller.Place
+import com.example.metaltraveller.R
+import com.example.metaltraveller.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore

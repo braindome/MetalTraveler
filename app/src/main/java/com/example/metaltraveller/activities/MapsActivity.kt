@@ -1,11 +1,14 @@
-package com.example.metaltraveller
+package com.example.metaltraveller.activities
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.example.metaltraveller.models.DataManager
+import com.example.metaltraveller.adapters.PlacesInfoAdapter
+import com.example.metaltraveller.R
+import com.example.metaltraveller.utils.Utils
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

@@ -1,17 +1,17 @@
-package com.example.metaltraveller
+package com.example.metaltraveller.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.metaltraveller.*
+import com.example.metaltraveller.adapters.PlacesRecyclerAdapter
+import com.example.metaltraveller.models.DataManager
+import com.example.metaltraveller.utils.Utils
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 class RecycleListActivity : AppCompatActivity() {
 

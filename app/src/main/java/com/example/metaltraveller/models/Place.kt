@@ -3,6 +3,7 @@ package com.example.metaltraveller
 
 //import com.google.android.gms.maps.model.LatLng
 import android.graphics.Bitmap
+import com.example.metaltraveller.models.MyLatLng
 import com.google.firebase.firestore.DocumentId
 import java.io.Serializable
 
@@ -22,7 +23,7 @@ data class Place(
     @DocumentId
     var documentId: String? = "",
 
-                            ) {
+    ) {
 }
 
 data class User(@DocumentId var userId : String? = null,
