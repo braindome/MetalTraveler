@@ -1,8 +1,10 @@
-package com.example.metaltraveller
+package com.example.metaltraveller.utils
 
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
+import com.example.metaltraveller.models.DataManager
+import com.example.metaltraveller.Place
+import com.example.metaltraveller.activities.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject

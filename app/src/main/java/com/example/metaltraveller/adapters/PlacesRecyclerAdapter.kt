@@ -1,4 +1,4 @@
-package com.example.metaltraveller
+package com.example.metaltraveller.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -13,6 +13,11 @@ import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.metaltraveller.activities.DetailsActivity
+import com.example.metaltraveller.activities.MapsActivity
+import com.example.metaltraveller.models.DataManager
+import com.example.metaltraveller.Place
+import com.example.metaltraveller.R
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -128,10 +133,6 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
                 itemView.context.startActivity(intent)
                 //TODO: send stuff to MapsActivity
             }
-
-//            favoriteButton.setOnClickListener() {
-//                DataManager.favorites[placePosition].favorite = favoriteButton.isChecked
-//            }
         }
 
     }

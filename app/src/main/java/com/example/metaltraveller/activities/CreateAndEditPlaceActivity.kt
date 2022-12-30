@@ -11,6 +11,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.metaltraveller.activities.RecycleListActivity
+import com.example.metaltraveller.models.MyLatLng
+import com.example.metaltraveller.utils.Utils
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -120,7 +123,7 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val user = auth.currentUser?.uid
 
         val googleLatLng = getLatLngFromAddress(this, location)
-        val position = com.example.metaltraveller.MyLatLng(googleLatLng?.latitude, googleLatLng?.longitude)
+        val position = MyLatLng(googleLatLng?.latitude, googleLatLng?.longitude)
 
         val intent = Intent(this, RecycleListActivity::class.java)
         val place = Place(name, rating, type, position, location, null, user)
