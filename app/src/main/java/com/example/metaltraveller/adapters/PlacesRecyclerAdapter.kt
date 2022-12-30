@@ -133,10 +133,6 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
                 itemView.context.startActivity(intent)
                 //TODO: send stuff to MapsActivity
             }
-
-//            favoriteButton.setOnClickListener() {
-//                DataManager.favorites[placePosition].favorite = favoriteButton.isChecked
-//            }
         }
 
     }

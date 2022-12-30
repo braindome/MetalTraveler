@@ -62,17 +62,6 @@ class MainActivity : AppCompatActivity() {
             signIn()
         }
 
-//        docRef.get().addOnSuccessListener { documentSnapShot ->
-//            for (document in documentSnapShot.documents) {
-//                val item = document.toObject<Place>()
-//                if (item != null) {
-//                    Log.d("if-statement", "inside if statement")
-//                    metalPlaces.add(item)
-//                }
-//
-//            }
-//            printPlaces()
-//        }
 
         docRef.addSnapshotListener() { snapshot, e ->
             if (snapshot != null) {

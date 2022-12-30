@@ -36,16 +36,11 @@ class DetailsActivity : AppCompatActivity() {
     lateinit var type : TextView
     lateinit var location : TextView
     lateinit var rating : TextView
-    lateinit var imageUrls : ArrayList<String>
 
     lateinit var browseButton : Button
     lateinit var uploadButton : Button
     lateinit var itemPhoto : ImageView
     lateinit var imageUri : Uri
-
-    companion object {
-        val IMAGE_REQUEST_CODE = 1_000;
-    }
 
     // Location stuff
     private val REQUEST_LOCATION = 1

@@ -30,9 +30,6 @@ class PlacesInfoAdapter(val context: Context) : GoogleMap.InfoWindowAdapter {
         markerType.text = place?.type
         markerRating.text = place?.rating.toString()
 
-        // For images check video
-
-
         return infoWindow
     }
 }
