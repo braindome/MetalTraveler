@@ -9,19 +9,21 @@ En samling av lokaler, festivaler, barer och spelningar där man kan gå till, d
 - Log in every time the app starts?
 - Work in progress....
 
+### TODO
+- [x] #todo Delete right item from RecyclerView from item delete button ✅ 2022-12-16
+- [x] #todo Delete document from Firebase ✅ 2022-12-16
+- [x] #todo Add new activity with item details ✅ 2022-12-20
+- [x] #todo Add insert coordinates function ✅ 2022-12-21
+- [x] #todo Add map with markers ✅ 2022-12-20
+- [x] #todo Firebase auth and users objects/documents ✅ 2022-12-24
+- [x] #todo Toolbar with menu ✅ 2022-12-24
+- [x] #todo Image(s) in detailed view ✅ 2022-12-30
+- [ ] #todo Link image in db to document
+- [ ] #todo User specific lists
+- [ ] #todo Error handling - adding same items twice or having same user emails should not be possible
 
-### TO-DO
-- [x] Main structure ✅ 2022-12-19
-- [x] Firebase Auth ✅ 2022-12-19
-- [x] Firebase Sync ✅ 2022-12-19
-- [x] RecyclerView List ✅ 2022-12-19
-- [x] Detailed Activity ✅ 2022-12-19
-- [x] Expanded List Item ✅ 2022-12-19
-- [x] RatingBar object ✅ 2022-12-22
-- [x] Google Maps and Position Support ✅ 2022-12-22
-- [ ] User and community lists
-- [x] Read data from db and `.toObject()` to populate obj list ✅ 2022-12-26
-- [x] Menu bar with logout drop item ✅ 2022-12-26
-- [ ] Expand DetailedView with image(s)
-- [ ] Image support (from camera and/or google search)
-- [ ] Material Design
+### IMPROVE
+- [x] #IMPROVE SnapshotListener, read from db and convert to object ✅ 2022-12-30
+- [ ] #IMPROVE Code cleanup
+- [ ] #IMPROVE Gallery from google search in DetailedView
+- [ ] #IMPROVE Material Design
