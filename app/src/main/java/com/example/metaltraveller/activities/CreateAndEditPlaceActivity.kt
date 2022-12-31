@@ -1,9 +1,11 @@
 package com.example.metaltraveller
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.location.Geocoder
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -24,6 +26,8 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 const val PLACE_POSITION_KEY = "PLACE_POSITION"
 const val POSITION_NOT_SET = -1
@@ -37,8 +41,10 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
     lateinit var auth : FirebaseAuth
     lateinit var db : FirebaseFirestore
     lateinit var storage : FirebaseStorage
-    lateinit var imgUrl : EditText
+    lateinit var uploadButton : Button
     lateinit var addImg : Button
+    lateinit var itemImage : ImageView
+    lateinit var imageUri : Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,12 +58,7 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val addButton = findViewById<Button>(R.id.addPlaceButton)
 
         val storageRef = storage.reference
-        val pustervikRef = storageRef.child("images/pustervik.jpg")
-        val rockbarenRef = storageRef.child("rockbaren.jpg")
-        val ulleviRef = storageRef.child("ullevi.jpg")
-        val abyssRef = storageRef.child("abyss.jpg")
-        var imagesRef : StorageReference? = storageRef.child("Images")
-        var spaceRef = storageRef.child("images/space.jpg")
+
 
 //        if (placePosition != POSITION_NOT_SET) {
 //            displayPlace(placePosition)
@@ -70,8 +71,10 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         spinner = findViewById(R.id.spinner)
         ratingEditText = findViewById(R.id.placeRatingEdit) as RatingBar
         locationEditText = findViewById(R.id.locationEdit)
-        imgUrl = findViewById(R.id.imageUrlText)
+
         addImg = findViewById(R.id.addImageButton)
+        uploadButton = findViewById(R.id.uploadImageButton)
+        itemImage = findViewById(R.id.itemImage)
 
         ArrayAdapter.createFromResource(
             this,
@@ -83,11 +86,54 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         }
 
         addImg.setOnClickListener {
-            uploadLocalFile()
+            pickImageFromGallery()
+        }
+
+        uploadButton.setOnClickListener {
+            uploadImage()
         }
 
         addButton.setOnClickListener() {
             addNewPlace()
+        }
+    }
+
+    private fun uploadImage() {
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("Uploading...")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+
+        val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
+        val now = Date()
+        val fileName = formatter.format(now)
+        val storageRef = FirebaseStorage.getInstance().getReference("images/$fileName")
+
+        storageRef.putFile(imageUri)
+            .addOnSuccessListener {
+                itemImage.setImageURI(null)
+                Toast.makeText(this@CreateAndEditPlaceActivity, "Successfully uploaded", Toast.LENGTH_SHORT).show()
+                if (progressDialog.isShowing) progressDialog.dismiss()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this@CreateAndEditPlaceActivity, "Failed to upload", Toast.LENGTH_SHORT).show()
+                if (progressDialog.isShowing) progressDialog.dismiss()
+            }
+    }
+
+    private fun pickImageFromGallery() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(intent, 100)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            imageUri = data?.data!!
+            itemImage.setImageURI(imageUri)
         }
     }
 
@@ -107,10 +153,6 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
 
-    }
-
-    fun uploadLocalFile() {
-        //TODO: https://firebase.google.com/docs/storage
     }
 
 

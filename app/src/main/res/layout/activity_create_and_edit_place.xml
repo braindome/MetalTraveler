@@ -22,12 +22,12 @@
         android:id="@+id/addPlaceButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginBottom="50dp"
         android:text="Add"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageUrlText" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/placeNameEdit"
@@ -84,24 +84,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationEdit" />
 
-    <EditText
-        android:id="@+id/imageUrlText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Image URL"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/placeRatingEdit" />
-
     <Button
         android:id="@+id/addImageButton"
         android:layout_width="56dp"
         android:layout_height="46dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="104dp"
         app:icon="@drawable/ic_baseline_image_24"
         app:iconPadding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -115,5 +103,27 @@
         android:text="Type:"
         app:layout_constraintEnd_toStartOf="@+id/spinner"
         app:layout_constraintTop_toBottomOf="@+id/placeNameEdit" />
+
+    <ImageView
+        android:id="@+id/itemImage"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="20dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/placeRatingEdit"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/uploadImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="70dp"
+        android:text="Upload"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addImageButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
