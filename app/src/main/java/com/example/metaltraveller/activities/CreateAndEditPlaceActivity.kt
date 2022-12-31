@@ -4,9 +4,13 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
+import com.google.firebase.storage.UploadTask
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -17,17 +21,23 @@ import com.example.metaltraveller.activities.RecycleListActivity
 import com.example.metaltraveller.models.MyLatLng
 import com.example.metaltraveller.utils.Utils
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.util.Executors
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import java.io.ByteArrayOutputStream
+import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.Executors.newSingleThreadExecutor
 
 const val PLACE_POSITION_KEY = "PLACE_POSITION"
 const val POSITION_NOT_SET = -1
@@ -45,6 +55,7 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
     lateinit var addImg : Button
     lateinit var itemImage : ImageView
     lateinit var imageUri : Uri
+    var imageUrl : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +68,6 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val placePosition = intent.getIntExtra(PLACE_POSITION_KEY, POSITION_NOT_SET)
         val addButton = findViewById<Button>(R.id.addPlaceButton)
 
-        val storageRef = storage.reference
 
 
 //        if (placePosition != POSITION_NOT_SET) {
@@ -98,7 +108,36 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadImage() {
+//    private fun uploadImage() {
+//        val progressDialog = ProgressDialog(this)
+//        progressDialog.setMessage("Uploading...")
+//        progressDialog.setCancelable(false)
+//        progressDialog.show()
+//
+//        val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
+//        val now = Date()
+//        val fileName = formatter.format(now)
+//        val storageRef = FirebaseStorage.getInstance().getReference("images/$fileName")
+//
+//
+//        storageRef.putFile(imageUri)
+//            .addOnSuccessListener {
+//                getImageUrl(imageUri, fileName)
+//                    .addOnSuccessListener { uri ->
+//                        imageUri.toString() }
+//                    .addOnFailureListener {
+//                        Log.d("!!!", "fail") }
+//                itemImage.setImageURI(null)
+//                Toast.makeText(this@CreateAndEditPlaceActivity, "Successfully uploaded", Toast.LENGTH_SHORT).show()
+//                if (progressDialog.isShowing) progressDialog.dismiss()
+//            }
+//            .addOnFailureListener {
+//                Toast.makeText(this@CreateAndEditPlaceActivity, "Failed to upload", Toast.LENGTH_SHORT).show()
+//                if (progressDialog.isShowing) progressDialog.dismiss()
+//            }
+//    }
+
+    fun uploadImage(): String {
         val progressDialog = ProgressDialog(this)
         progressDialog.setMessage("Uploading...")
         progressDialog.setCancelable(false)
@@ -108,6 +147,15 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val now = Date()
         val fileName = formatter.format(now)
         val storageRef = FirebaseStorage.getInstance().getReference("images/$fileName")
+
+        val imageUrlTask = getImageUrl(imageUri, fileName)
+        var imageUrl = ""
+
+        imageUrlTask
+            .addOnSuccessListener { uri ->
+                imageUrl = uri.toString()
+            }
+            .addOnFailureListener { e -> }
 
         storageRef.putFile(imageUri)
             .addOnSuccessListener {
@@ -119,6 +167,14 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
                 Toast.makeText(this@CreateAndEditPlaceActivity, "Failed to upload", Toast.LENGTH_SHORT).show()
                 if (progressDialog.isShowing) progressDialog.dismiss()
             }
+
+        return imageUrl
+    }
+
+    fun getImageUrl(imageUri : Uri, fileName : String) : Task<Uri> {
+        val storage = FirebaseStorage.getInstance()
+        val storageRef = storage.reference
+        return storageRef.child("images/$fileName").downloadUrl
     }
 
     private fun pickImageFromGallery() {
@@ -128,7 +184,6 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         startActivityForResult(intent, 100)
     }
 
-    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 100 && resultCode == RESULT_OK) {
@@ -156,11 +211,18 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
     }
 
 
+
     fun addNewPlace() {
         val name = nameEditText.text.toString()
         val rating = ratingEditText.rating
         val type = spinner.selectedItem.toString()
         val location = locationEditText.text.toString()
+        val image = uploadImage()
+
+        val docRef = FirebaseFirestore.getInstance().collection("Places").document()
+
+
+
         //val user = intent.getStringExtra("userId")
         val user = auth.currentUser?.uid
 
@@ -168,7 +230,17 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val position = MyLatLng(googleLatLng?.latitude, googleLatLng?.longitude)
 
         val intent = Intent(this, RecycleListActivity::class.java)
-        val place = Place(name, rating, type, position, location, null, user)
+        val place = Place(name, rating, type, position, location, image, user)
+
+        docRef.update("imageUrl", imageUrl)
+            .addOnSuccessListener {
+                // Update successful
+            }
+            .addOnFailureListener { e ->
+                // Update failed
+            }
+
+
 
         db.collection("Places").add(place)
             .addOnSuccessListener { documentReference ->
