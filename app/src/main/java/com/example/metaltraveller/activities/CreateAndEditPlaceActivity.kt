@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.location.Geocoder
@@ -32,6 +34,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
@@ -55,7 +58,8 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
     lateinit var addImg : Button
     lateinit var itemImage : ImageView
     lateinit var imageUri : Uri
-    var imageUrl : String = ""
+    lateinit var imageFileName : String
+    lateinit var imageUrl : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,7 +141,7 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
 //            }
 //    }
 
-    fun uploadImage(): String {
+    fun uploadImage(){
         val progressDialog = ProgressDialog(this)
         progressDialog.setMessage("Uploading...")
         progressDialog.setCancelable(false)
@@ -148,14 +152,9 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val fileName = formatter.format(now)
         val storageRef = FirebaseStorage.getInstance().getReference("images/$fileName")
 
-        val imageUrlTask = getImageUrl(imageUri, fileName)
-        var imageUrl = ""
+        imageFileName = fileName.toString()
+        imageUrl = "images/$imageFileName"
 
-        imageUrlTask
-            .addOnSuccessListener { uri ->
-                imageUrl = uri.toString()
-            }
-            .addOnFailureListener { e -> }
 
         storageRef.putFile(imageUri)
             .addOnSuccessListener {
@@ -168,13 +167,15 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
                 if (progressDialog.isShowing) progressDialog.dismiss()
             }
 
-        return imageUrl
     }
 
-    fun getImageUrl(imageUri : Uri, fileName : String) : Task<Uri> {
+    fun getImageUrl(imageUri : Uri, fileName : String) : Task<String> {
         val storage = FirebaseStorage.getInstance()
         val storageRef = storage.reference
         return storageRef.child("images/$fileName").downloadUrl
+            .continueWith { task ->
+                task.result!!.toString()
+            }
     }
 
     private fun pickImageFromGallery() {
@@ -217,7 +218,7 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val rating = ratingEditText.rating
         val type = spinner.selectedItem.toString()
         val location = locationEditText.text.toString()
-        val image = uploadImage()
+        val image = imageUrl
 
         val docRef = FirebaseFirestore.getInstance().collection("Places").document()
 
