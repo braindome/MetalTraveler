@@ -125,6 +125,7 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
                 intent.putExtra("type", places[placePosition].type)
                 intent.putExtra("location", places[placePosition].location)
                 intent.putExtra("rating", places[placePosition].rating)
+                intent.putExtra("image", places[placePosition].image)
                 itemView.context.startActivity(intent)
             }
 

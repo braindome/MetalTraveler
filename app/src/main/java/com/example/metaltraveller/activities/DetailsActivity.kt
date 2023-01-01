@@ -15,12 +15,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.bumptech.glide.Glide
 import com.example.metaltraveller.R
 import com.example.metaltraveller.databinding.ActivityMainBinding
 import com.example.metaltraveller.utils.Utils
 import com.google.android.gms.location.*
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -53,6 +56,22 @@ class DetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_details)
 
         val back : Button = findViewById(R.id.backButton)
+
+        val imagePath = intent.getStringExtra("image")
+        val storage = Firebase.storage
+        val storageRef = storage.getReferenceFromUrl("gs://metaltraveller-d4eb0.appspot.com")
+        val imagesRef = imagePath?.let { storageRef.child(it) }
+
+        if (imagesRef != null) {
+            imagesRef.getDownloadUrl().addOnSuccessListener { uri ->
+                // Got the download URL for 'images/image.jpg'
+                val imageUrl = uri.toString()
+                Glide.with(this).load(imageUrl).into(itemPhoto)
+            }.addOnFailureListener {
+                // Handle any errors
+            }
+        }
+
         setSupportActionBar(findViewById(R.id.detailsToolbar))
         browseButton = findViewById(R.id.browseButton)
         uploadButton = findViewById(R.id.uploadButton)
