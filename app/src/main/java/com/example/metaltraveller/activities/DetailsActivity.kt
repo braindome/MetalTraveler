@@ -17,21 +17,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.example.metaltraveller.R
-import com.example.metaltraveller.databinding.ActivityMainBinding
 import com.example.metaltraveller.utils.Utils
 import com.google.android.gms.location.*
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class DetailsActivity : AppCompatActivity() {
 
