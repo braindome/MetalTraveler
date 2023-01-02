@@ -10,9 +10,10 @@
         android:id="@+id/detailsToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="@color/blue_gray_900"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,16 +21,17 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="414dp"
-        android:layout_height="616dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="1dp"
+        android:background="@color/blue_gray_200"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/detailsToolbar" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatAddButton"
@@ -38,6 +40,8 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:clickable="true"
+        app:tint="@color/blue_gray_100"
+        app:backgroundTint="@color/blue_gray_900"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_add_24" />
