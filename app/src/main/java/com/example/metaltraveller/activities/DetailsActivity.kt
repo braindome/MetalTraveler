@@ -33,8 +33,8 @@ class DetailsActivity : AppCompatActivity() {
     lateinit var location : TextView
     lateinit var rating : RatingBar
 
-    lateinit var browseButton : Button
-    lateinit var uploadButton : Button
+//    lateinit var browseButton : Button
+//    lateinit var uploadButton : Button
     lateinit var itemPhoto : ImageView
     lateinit var imageUri : Uri
 
@@ -56,7 +56,7 @@ class DetailsActivity : AppCompatActivity() {
         val imagesRef = imagePath?.let { storageRef.child(it) }
 
         if (imagesRef != null) {
-            imagesRef.getDownloadUrl().addOnSuccessListener { uri ->
+            imagesRef.downloadUrl.addOnSuccessListener { uri ->
                 // Got the download URL for 'images/image.jpg'
                 val imageUrl = uri.toString()
                 Glide.with(this).load(imageUrl).into(itemPhoto)
@@ -66,17 +66,17 @@ class DetailsActivity : AppCompatActivity() {
         }
 
         setSupportActionBar(findViewById(R.id.detailsToolbar))
-        browseButton = findViewById(R.id.browseButton)
-        uploadButton = findViewById(R.id.uploadButton)
+//        browseButton = findViewById(R.id.browseButton)
+//        uploadButton = findViewById(R.id.uploadButton)
         itemPhoto = findViewById(R.id.itemPhoto)
 
-        browseButton.setOnClickListener {
-            pickImageFromGallery()
-        }
-
-        uploadButton.setOnClickListener {
-            uploadImage()
-        }
+//        browseButton.setOnClickListener {
+//            pickImageFromGallery()
+//        }
+//
+//        uploadButton.setOnClickListener {
+//            uploadImage()
+//        }
 
 
         // Location stuff
@@ -101,7 +101,7 @@ class DetailsActivity : AppCompatActivity() {
         name = findViewById(R.id.nameText)
         type = findViewById(R.id.typeText)
         location = findViewById(R.id.locationText)
-        rating = findViewById(R.id.ratingText)
+        rating = findViewById(R.id.markerRatingView)
 
         name.text = intent.getStringExtra("name")
         type.text = intent.getStringExtra("type")

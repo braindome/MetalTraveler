@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RatingBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -45,7 +46,7 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
 
         holder.nameTextView.text = place.name
         holder.typeNameView.text = place.type
-        holder.ratingTextView.text = place.rating.toString()
+        holder.ratingTextView.rating = place.rating!!
         holder.placeLocationView.text = place.location
         holder.placePosition = position
         "Place added by: ${place.userId}".also { holder.addedBy.text = it }
@@ -80,7 +81,7 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
 
         val nameTextView = itemView.findViewById<TextView>(R.id.placeNameView)
         val typeNameView = itemView.findViewById<TextView>(R.id.placeTypeView)
-        val ratingTextView = itemView.findViewById<TextView>(R.id.placeRatingView)
+        val ratingTextView = itemView.findViewById<RatingBar>(R.id.recycleRatingView)
         val placeLocationView = itemView.findViewById<TextView>(R.id.placeLocationView)
         //var favoriteButton = itemView.findViewById<SwitchCompat>(R.id.switch1)
         val deleteButton = itemView.findViewById<AppCompatImageButton>(R.id.deleteButton)
