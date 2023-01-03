@@ -61,7 +61,7 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
     lateinit var itemImage : ImageView
     lateinit var imageUri : Uri
     lateinit var imageFileName : String
-    lateinit var imageUrl : String
+    var imageUrl : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -197,16 +197,22 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
-        inflater.inflate(R.menu.toolbar_menu, menu)
+        inflater.inflate(R.menu.nav_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.logout_button -> {
+            R.id.action_logout -> {
                 Utils().logOut(this)
                 finish()
                 true
+            }
+            R.id.action_map -> {
+                val intent = Intent(this, MapsActivity::class.java)
+                startActivity(intent)
+                true
+
             }
             else -> super.onOptionsItemSelected(item)
         }

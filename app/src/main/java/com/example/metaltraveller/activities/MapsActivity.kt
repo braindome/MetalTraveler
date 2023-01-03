@@ -58,13 +58,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
-        inflater.inflate(R.menu.toolbar_menu, menu)
+        inflater.inflate(R.menu.nav_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.logout_button -> {
+            R.id.action_logout -> {
                 Utils().logOut(this)
                 true
             }
