@@ -51,15 +51,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible">
 
-        <TextView
+        <ImageButton
             android:id="@+id/detailsButton"
             android:layout_width="62dp"
             android:layout_height="30dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="53dp"
-            android:layout_marginBottom="45dp"
-            android:layout_toStartOf="@+id/mapButton"
-            android:text="Details" />
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="43dp"
+            app:srcCompat="@drawable/ic_baseline_image_24"
+            android:background="@drawable/recycle_item_style"
+            android:layout_toStartOf="@+id/mapButton" />
 
         <ImageButton
             android:id="@+id/deleteButton"
@@ -91,7 +92,8 @@
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="47dp"
             android:layout_toStartOf="@+id/deleteButton"
-            android:text="Fav" />
+            android:text="Fav"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         <TextView
             android:id="@+id/addedByView"

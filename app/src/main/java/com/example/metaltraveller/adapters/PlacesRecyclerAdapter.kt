@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.RatingBar
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -85,7 +86,7 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
         val placeLocationView = itemView.findViewById<TextView>(R.id.placeLocationView)
         //var favoriteButton = itemView.findViewById<SwitchCompat>(R.id.switch1)
         val deleteButton = itemView.findViewById<AppCompatImageButton>(R.id.deleteButton)
-        val detailsButton = itemView.findViewById<AppCompatTextView>(R.id.detailsButton)
+        val detailsButton = itemView.findViewById<ImageButton>(R.id.detailsButton)
         val mapButton = itemView.findViewById<AppCompatImageView>(R.id.mapButton)
         val addedBy = itemView.findViewById<TextView>(R.id.addedByView)
 
