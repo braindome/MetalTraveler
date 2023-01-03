@@ -124,7 +124,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     fun goToAddActivity() {
         val intent = Intent(this, RecycleListActivity::class.java)
         intent.putExtra("userId", auth.uid)
