@@ -66,6 +66,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="21dp"
+            android:background="@drawable/recycle_item_style"
+            android:contentDescription="Deletes object"
             app:srcCompat="@android:drawable/ic_menu_delete" />
 
         <ImageView

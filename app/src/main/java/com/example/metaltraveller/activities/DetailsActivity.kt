@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -30,7 +31,7 @@ class DetailsActivity : AppCompatActivity() {
     lateinit var name : TextView
     lateinit var type : TextView
     lateinit var location : TextView
-    lateinit var rating : TextView
+    lateinit var rating : RatingBar
 
     lateinit var browseButton : Button
     lateinit var uploadButton : Button
@@ -105,7 +106,7 @@ class DetailsActivity : AppCompatActivity() {
         name.text = intent.getStringExtra("name")
         type.text = intent.getStringExtra("type")
         location.text = intent.getStringExtra("location")
-        rating.text = intent.getIntExtra("rating", 0).toString()
+        rating.rating = intent.getFloatExtra("rating", 0.0F)
 
         back.setOnClickListener {
             backToList()

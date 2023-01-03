@@ -2,7 +2,7 @@
     <string name="app_name">MetalTraveller</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="title_card">Metal Traveller</string>
-    <string name="intro">Welcome to Metal Travellers! Add and browse your and other people\'s favorite Metal places around the world!
+    <string name="intro">Welcome to Metal Traveller! Add and browse your and other people\'s favorite Metal places around the world!
         \m/ Create an account or log in to start browsing.</string>
     <string name="email">E-mail</string>
     <string name="password">Password</string>
