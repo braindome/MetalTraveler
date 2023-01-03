@@ -75,14 +75,6 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val addButton = findViewById<Button>(R.id.addPlaceButton)
 
 
-
-//        if (placePosition != POSITION_NOT_SET) {
-//            displayPlace(placePosition)
-//            addButton.setOnClickListener() {
-//                //TODO
-//            }
-//        }
-
         nameEditText = findViewById(R.id.placeNameEdit)
         spinner = findViewById(R.id.spinner)
         ratingEditText = findViewById(R.id.placeRatingEdit) as RatingBar
@@ -239,7 +231,7 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val position = MyLatLng(googleLatLng?.latitude, googleLatLng?.longitude)
 
         val intent = Intent(this, RecycleListActivity::class.java)
-        val infoSquareIntent = Intent(this, PlacesInfoAdapter::class.java)
+        //val infoSquareIntent = Intent(this, PlacesInfoAdapter::class.java)
         val place = Place(name, rating, type, position, location, image, user)
 
         docRef.update("imageUrl", imageUrl)
