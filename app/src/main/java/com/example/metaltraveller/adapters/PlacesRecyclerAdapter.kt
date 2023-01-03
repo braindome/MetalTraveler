@@ -133,7 +133,6 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
             mapButton.setOnClickListener {
                 val intent = Intent(itemView.context, MapsActivity::class.java)
                 itemView.context.startActivity(intent)
-                //TODO: send stuff to MapsActivity
             }
         }
 
