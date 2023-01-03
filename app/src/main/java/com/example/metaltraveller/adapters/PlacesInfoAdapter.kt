@@ -3,11 +3,16 @@ package com.example.metaltraveller.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.metaltraveller.Place
 import com.example.metaltraveller.R
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 class PlacesInfoAdapter(val context: Context) : GoogleMap.InfoWindowAdapter {
 
@@ -22,13 +27,18 @@ class PlacesInfoAdapter(val context: Context) : GoogleMap.InfoWindowAdapter {
 
         val markerName = infoWindow.findViewById<TextView>(R.id.markerNameView)
         val markerType = infoWindow.findViewById<TextView>(R.id.markerTypeView)
-        val markerRating = infoWindow.findViewById<TextView>(R.id.markerRatingView)
+        val markerRating = infoWindow.findViewById<RatingBar>(R.id.markerRatingView)
+
 
         val place = marker.tag as? Place
 
+
+
         markerName.text = place?.name
         markerType.text = place?.type
-        markerRating.text = place?.rating.toString()
+        markerRating.rating = place?.rating!!
+
+
 
         return infoWindow
     }

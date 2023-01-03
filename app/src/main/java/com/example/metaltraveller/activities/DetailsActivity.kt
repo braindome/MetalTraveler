@@ -11,37 +11,30 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.example.metaltraveller.R
-import com.example.metaltraveller.databinding.ActivityMainBinding
 import com.example.metaltraveller.utils.Utils
 import com.google.android.gms.location.*
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class DetailsActivity : AppCompatActivity() {
 
     lateinit var name : TextView
     lateinit var type : TextView
     lateinit var location : TextView
-    lateinit var rating : TextView
+    lateinit var rating : RatingBar
 
-    lateinit var browseButton : Button
-    lateinit var uploadButton : Button
+//    lateinit var browseButton : Button
+//    lateinit var uploadButton : Button
     lateinit var itemPhoto : ImageView
     lateinit var imageUri : Uri
 
@@ -63,7 +56,7 @@ class DetailsActivity : AppCompatActivity() {
         val imagesRef = imagePath?.let { storageRef.child(it) }
 
         if (imagesRef != null) {
-            imagesRef.getDownloadUrl().addOnSuccessListener { uri ->
+            imagesRef.downloadUrl.addOnSuccessListener { uri ->
                 // Got the download URL for 'images/image.jpg'
                 val imageUrl = uri.toString()
                 Glide.with(this).load(imageUrl).into(itemPhoto)
@@ -73,17 +66,17 @@ class DetailsActivity : AppCompatActivity() {
         }
 
         setSupportActionBar(findViewById(R.id.detailsToolbar))
-        browseButton = findViewById(R.id.browseButton)
-        uploadButton = findViewById(R.id.uploadButton)
+//        browseButton = findViewById(R.id.browseButton)
+//        uploadButton = findViewById(R.id.uploadButton)
         itemPhoto = findViewById(R.id.itemPhoto)
 
-        browseButton.setOnClickListener {
-            pickImageFromGallery()
-        }
-
-        uploadButton.setOnClickListener {
-            uploadImage()
-        }
+//        browseButton.setOnClickListener {
+//            pickImageFromGallery()
+//        }
+//
+//        uploadButton.setOnClickListener {
+//            uploadImage()
+//        }
 
 
         // Location stuff
@@ -108,12 +101,12 @@ class DetailsActivity : AppCompatActivity() {
         name = findViewById(R.id.nameText)
         type = findViewById(R.id.typeText)
         location = findViewById(R.id.locationText)
-        rating = findViewById(R.id.ratingText)
+        rating = findViewById(R.id.markerRatingView)
 
         name.text = intent.getStringExtra("name")
         type.text = intent.getStringExtra("type")
         location.text = intent.getStringExtra("location")
-        rating.text = intent.getIntExtra("rating", 0).toString()
+        rating.rating = intent.getFloatExtra("rating", 0.0F)
 
         back.setOnClickListener {
             backToList()

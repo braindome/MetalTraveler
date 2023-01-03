@@ -19,7 +19,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.metaltraveller.activities.MapsActivity
 import com.example.metaltraveller.activities.RecycleListActivity
+import com.example.metaltraveller.adapters.PlacesInfoAdapter
 import com.example.metaltraveller.models.MyLatLng
 import com.example.metaltraveller.utils.Utils
 import com.google.android.gms.maps.model.LatLng
@@ -231,6 +233,7 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         val position = MyLatLng(googleLatLng?.latitude, googleLatLng?.longitude)
 
         val intent = Intent(this, RecycleListActivity::class.java)
+        val infoSquareIntent = Intent(this, PlacesInfoAdapter::class.java)
         val place = Place(name, rating, type, position, location, image, user)
 
         docRef.update("imageUrl", imageUrl)

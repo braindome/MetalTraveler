@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blue_gray_200"
     tools:context=".CreateAndEditPlaceActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/detailsToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="@color/blue_gray_900"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,6 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
+        android:backgroundTint="@color/blue_gray_900"
         android:text="Add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,6 +58,7 @@
         android:layout_width="178dp"
         android:layout_height="45dp"
         android:isIndicator="false"
+        android:progressTint="@color/blue_gray_900"
         android:numStars="5"
         android:stepSize="0.5"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,6 +93,7 @@
         android:layout_height="46dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="104dp"
+        android:backgroundTint="@color/blue_gray_900"
         app:icon="@drawable/ic_baseline_image_24"
         app:iconPadding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -106,7 +110,7 @@
 
     <ImageView
         android:id="@+id/itemImage"
-        android:layout_width="50dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
         android:layout_marginTop="20dp"
@@ -122,6 +126,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="70dp"
+        android:backgroundTint="@color/blue_gray_900"
         android:text="Upload"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addImageButton" />

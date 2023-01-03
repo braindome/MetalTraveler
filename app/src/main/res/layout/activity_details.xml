@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blue_gray_200"
     tools:context=".activities.DetailsActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/detailsToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="@color/blue_gray_900"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,13 +40,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameText" />
 
-    <TextView
-        android:id="@+id/ratingText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RatingBar
+        android:id="@+id/markerRatingView"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="84dp"
+        android:layout_height="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="70dp"
-        android:text="Rating"
+        android:layout_marginEnd="48dp"
+        android:progressTint="@color/blue_gray_700"
+        android:numStars="5"
+        android:stepSize="0.5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/typeText" />
 
@@ -63,41 +67,42 @@
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="@color/blue_gray_900"
         android:text="Back"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itemPhoto" />
 
     <ImageView
         android:id="@+id/itemPhoto"
-        android:layout_width="285dp"
+        android:layout_width="0dp"
         android:layout_height="239dp"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="50dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationText"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-    <Button
-        android:id="@+id/browseButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="Browse"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemPhoto" />
+<!--    <Button-->
+<!--        android:id="@+id/browseButton"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:text="Browse"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/itemPhoto" />-->
 
-    <Button
-        android:id="@+id/uploadButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Upload"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/browseButton" />
+<!--    <Button-->
+<!--        android:id="@+id/uploadButton"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Upload"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/browseButton" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
