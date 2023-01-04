@@ -26,6 +26,7 @@
         android:layout_marginTop="40dp"
         android:backgroundTint="@color/blue_gray_900"
         android:text="Add"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -91,12 +92,12 @@
         android:id="@+id/addImageButton"
         android:layout_width="56dp"
         android:layout_height="46dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="104dp"
         android:backgroundTint="@color/blue_gray_900"
         app:icon="@drawable/ic_baseline_image_24"
         app:iconPadding="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/itemImage"
         app:layout_constraintTop_toBottomOf="@+id/placeRatingEdit" />
 
     <TextView
@@ -124,11 +125,11 @@
         android:id="@+id/uploadImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="70dp"
         android:backgroundTint="@color/blue_gray_900"
         android:text="Upload"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/itemImage"
         app:layout_constraintTop_toBottomOf="@+id/addImageButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

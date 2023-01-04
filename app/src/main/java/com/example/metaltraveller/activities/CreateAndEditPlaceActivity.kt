@@ -84,6 +84,8 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         uploadButton = findViewById(R.id.uploadImageButton)
         itemImage = findViewById(R.id.itemImage)
 
+        itemImage.setImageResource(R.drawable.title_card_3)
+
         ArrayAdapter.createFromResource(
             this,
             R.array.place_types,
