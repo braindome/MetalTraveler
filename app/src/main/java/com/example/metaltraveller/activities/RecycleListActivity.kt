@@ -55,6 +55,9 @@ class RecycleListActivity : AppCompatActivity() {
                 startActivity(intent)
                 true
             }
+//            R.id.action_favorite -> {
+//                //TODO
+//            }
             else -> super.onOptionsItemSelected(item)
         }
 

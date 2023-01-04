@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.RatingBar
 import android.widget.RelativeLayout
+import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageButton
@@ -20,12 +21,13 @@ import com.example.metaltraveller.activities.MapsActivity
 import com.example.metaltraveller.models.DataManager
 import com.example.metaltraveller.Place
 import com.example.metaltraveller.R
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
-class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
+class PlacesRecyclerAdapter(context : Context, var places: List<Place>)
                             : RecyclerView.Adapter<PlacesRecyclerAdapter.ViewHolder>() {
 
     val layoutInflater = LayoutInflater.from(context)
@@ -50,6 +52,8 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
         holder.ratingTextView.rating = place.rating!!
         holder.placeLocationView.text = place.location
         holder.placePosition = position
+        holder.favoriteSwitch.isChecked = place.favorite
+
         "Place added by: ${place.userId}".also { holder.addedBy.text = it }
 
         val holdPlacePosition = holder.deleteButton
@@ -71,6 +75,15 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
             place.expandable = !place.expandable
             notifyItemChanged(position)
         }
+
+        holder.favoriteSwitch.setOnCheckedChangeListener { _, isChecked ->
+            place.favorite = isChecked
+        }
+    }
+
+    fun filterFavorites() {
+        places = places.filter { it.favorite }
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = places.size
@@ -84,7 +97,7 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
         val typeNameView = itemView.findViewById<TextView>(R.id.placeTypeView)
         val ratingTextView = itemView.findViewById<RatingBar>(R.id.recycleRatingView)
         val placeLocationView = itemView.findViewById<TextView>(R.id.placeLocationView)
-        //var favoriteButton = itemView.findViewById<SwitchCompat>(R.id.switch1)
+        var favoriteSwitch = itemView.findViewById<SwitchMaterial>(R.id.switch1)
         val deleteButton = itemView.findViewById<AppCompatImageButton>(R.id.deleteButton)
         val detailsButton = itemView.findViewById<ImageButton>(R.id.detailsButton)
         val mapButton = itemView.findViewById<AppCompatImageView>(R.id.mapButton)
