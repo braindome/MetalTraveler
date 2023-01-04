@@ -4,15 +4,10 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.location.Address
 import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
-import com.google.firebase.storage.UploadTask
-import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -21,28 +16,20 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.metaltraveller.activities.MapsActivity
 import com.example.metaltraveller.activities.RecycleListActivity
-import com.example.metaltraveller.adapters.PlacesInfoAdapter
 import com.example.metaltraveller.models.MyLatLng
 import com.example.metaltraveller.utils.Utils
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.Task
-import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.util.Executors
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
-import kotlinx.coroutines.tasks.await
-import java.io.ByteArrayOutputStream
-import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.Executors.newSingleThreadExecutor
 
 const val PLACE_POSITION_KEY = "PLACE_POSITION"
 const val POSITION_NOT_SET = -1
@@ -107,35 +94,6 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
             addNewPlace()
         }
     }
-
-//    private fun uploadImage() {
-//        val progressDialog = ProgressDialog(this)
-//        progressDialog.setMessage("Uploading...")
-//        progressDialog.setCancelable(false)
-//        progressDialog.show()
-//
-//        val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
-//        val now = Date()
-//        val fileName = formatter.format(now)
-//        val storageRef = FirebaseStorage.getInstance().getReference("images/$fileName")
-//
-//
-//        storageRef.putFile(imageUri)
-//            .addOnSuccessListener {
-//                getImageUrl(imageUri, fileName)
-//                    .addOnSuccessListener { uri ->
-//                        imageUri.toString() }
-//                    .addOnFailureListener {
-//                        Log.d("!!!", "fail") }
-//                itemImage.setImageURI(null)
-//                Toast.makeText(this@CreateAndEditPlaceActivity, "Successfully uploaded", Toast.LENGTH_SHORT).show()
-//                if (progressDialog.isShowing) progressDialog.dismiss()
-//            }
-//            .addOnFailureListener {
-//                Toast.makeText(this@CreateAndEditPlaceActivity, "Failed to upload", Toast.LENGTH_SHORT).show()
-//                if (progressDialog.isShowing) progressDialog.dismiss()
-//            }
-//    }
 
     fun uploadImage(){
         val progressDialog = ProgressDialog(this)
@@ -265,6 +223,20 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         //DataManager.places.add(place)
         //Log.d("Pos!!!", "GeoPoint values: $position")
         startActivity(intent)
+    }
+
+    fun getCityFromLatLng(latlng : MyLatLng) : String? {
+        val geocoder = Geocoder(this, Locale.getDefault())
+        val addresses: List<Address> = latlng.lat?.let { latlng.lng?.let { it1 ->
+            geocoder.getFromLocation(it,
+                it1, 1)
+        } } as List<Address>
+
+        return if (addresses.isNotEmpty()) {
+            addresses[0].locality
+        } else {
+            null
+        }
     }
 
 
