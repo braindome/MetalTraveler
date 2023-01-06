@@ -28,11 +28,7 @@ class PlacesInfoAdapter(val context: Context) : GoogleMap.InfoWindowAdapter {
         val markerName = infoWindow.findViewById<TextView>(R.id.markerNameView)
         val markerType = infoWindow.findViewById<TextView>(R.id.markerTypeView)
         val markerRating = infoWindow.findViewById<RatingBar>(R.id.markerRatingView)
-
-
         val place = marker.tag as? Place
-
-
 
         markerName.text = place?.name
         markerType.text = place?.type

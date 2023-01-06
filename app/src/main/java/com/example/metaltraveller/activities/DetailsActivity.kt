@@ -32,9 +32,6 @@ class DetailsActivity : AppCompatActivity() {
     lateinit var type : TextView
     lateinit var location : TextView
     lateinit var rating : RatingBar
-
-//    lateinit var browseButton : Button
-//    lateinit var uploadButton : Button
     lateinit var itemPhoto : ImageView
     lateinit var imageUri : Uri
 
@@ -66,20 +63,10 @@ class DetailsActivity : AppCompatActivity() {
         }
 
         setSupportActionBar(findViewById(R.id.detailsToolbar))
-//        browseButton = findViewById(R.id.browseButton)
-//        uploadButton = findViewById(R.id.uploadButton)
         itemPhoto = findViewById(R.id.itemPhoto)
 
-//        browseButton.setOnClickListener {
-//            pickImageFromGallery()
-//        }
-//
-//        uploadButton.setOnClickListener {
-//            uploadImage()
-//        }
 
-
-        // Location stuff
+        // Location stuff. To be implemented in the near future.
         locationProvider = LocationServices.getFusedLocationProviderClient(this)
         locationRequest = LocationRequest.Builder(2000).build()
         locationCallback = object : LocationCallback() {

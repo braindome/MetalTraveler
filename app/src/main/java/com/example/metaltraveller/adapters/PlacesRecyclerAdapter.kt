@@ -37,9 +37,7 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = layoutInflater.inflate(R.layout.recycled_item_layout, parent, false)
-
         return ViewHolder(itemView, parent.context)
-
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -53,13 +51,8 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
         "Place added by: ${place.userId}".also { holder.addedBy.text = it }
 
         val holdPlacePosition = holder.deleteButton
-
         val isExpandable : Boolean = place.expandable
         holder.expandedRow.visibility = if (isExpandable) View.VISIBLE else View.GONE
-
-
-
-
 
         holdPlacePosition.setOnClickListener {
             holder.removePlace(position)
@@ -78,7 +71,7 @@ class PlacesRecyclerAdapter(context : Context, val places: List<Place>)
 
 
     inner class ViewHolder(itemView : View, val context: Context) : RecyclerView.ViewHolder(itemView) {
-
+        // Favorites: To be implemented.
 
         val nameTextView = itemView.findViewById<TextView>(R.id.placeNameView)
         val typeNameView = itemView.findViewById<TextView>(R.id.placeTypeView)
