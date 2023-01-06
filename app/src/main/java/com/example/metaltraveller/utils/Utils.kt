@@ -10,6 +10,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
+/* Testing some utility functions to be used elsewhere. */
+
 class Utils {
 
     val db = Firebase.firestore

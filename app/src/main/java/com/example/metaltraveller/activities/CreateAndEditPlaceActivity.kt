@@ -86,6 +86,8 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
 
         itemImage.setImageResource(R.drawable.title_card_3)
 
+
+        // Spinner setup with layout.
         ArrayAdapter.createFromResource(
             this,
             R.array.place_types,
@@ -108,35 +110,9 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         }
     }
 
-//    private fun uploadImage() {
-//        val progressDialog = ProgressDialog(this)
-//        progressDialog.setMessage("Uploading...")
-//        progressDialog.setCancelable(false)
-//        progressDialog.show()
-//
-//        val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
-//        val now = Date()
-//        val fileName = formatter.format(now)
-//        val storageRef = FirebaseStorage.getInstance().getReference("images/$fileName")
-//
-//
-//        storageRef.putFile(imageUri)
-//            .addOnSuccessListener {
-//                getImageUrl(imageUri, fileName)
-//                    .addOnSuccessListener { uri ->
-//                        imageUri.toString() }
-//                    .addOnFailureListener {
-//                        Log.d("!!!", "fail") }
-//                itemImage.setImageURI(null)
-//                Toast.makeText(this@CreateAndEditPlaceActivity, "Successfully uploaded", Toast.LENGTH_SHORT).show()
-//                if (progressDialog.isShowing) progressDialog.dismiss()
-//            }
-//            .addOnFailureListener {
-//                Toast.makeText(this@CreateAndEditPlaceActivity, "Failed to upload", Toast.LENGTH_SHORT).show()
-//                if (progressDialog.isShowing) progressDialog.dismiss()
-//            }
-//    }
-
+    /* Upload pictures, shows a progress dialog
+    * popup, show toast when successful or unsuccessful.
+    * File is renamed with date and time. */
     fun uploadImage(){
         val progressDialog = ProgressDialog(this)
         progressDialog.setMessage("Uploading...")
@@ -165,6 +141,8 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
 
     }
 
+    /* Gets image URL from storage.
+    * Unused here. */
     fun getImageUrl(imageUri : Uri, fileName : String) : Task<String> {
         val storage = FirebaseStorage.getInstance()
         val storageRef = storage.reference
@@ -174,6 +152,8 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
             }
     }
 
+    /* Allows user to browse the internal storage
+    * and pick a picture to upload. */
     private fun pickImageFromGallery() {
         val intent = Intent()
         intent.type = "image/*"
@@ -189,12 +169,14 @@ class CreateAndEditPlaceActivity : AppCompatActivity() {
         }
     }
 
+    /* Inflates navbar. */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.nav_menu, menu)
         return true
     }
 
+    /* Navbar functionality. */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_logout -> {
